@@ -4,6 +4,7 @@ import Sign_Up from "./components_login/Sign_Up";
 import Sign_in from "./components_login/Sign_in";
 import Home from "./component_home/Home";
 import Auction_list from "./auction/Auction_list";
+import Auction from "./auction/auction_details";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/login" element={<Sign_in />} />
           <Route path="/" element={<Home />} />
           <Route path="/auction" element={<Auction_list />} />
+          <Route path="/auction/:id" element={<Auction />} />
           {/* Add more routes as needed */}
         </Routes>
       </div>

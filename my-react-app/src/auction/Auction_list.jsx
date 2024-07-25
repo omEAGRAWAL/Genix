@@ -64,14 +64,17 @@ function AuctionList() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhost:3000/api/auctions", {
+      const token = localStorage.getItem("token");
+      console.log("Token:", token);
+      //Token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmExMTY2MDI0NTQxYjgwNzliNWQzOWUiLCJpYXQiOjE3MjE4ODA4ODV9.55ZjB3T-4JrgGisv0VaRFE4uWmBfSgdg4aR0ebcL6to"
+
+      const response = await fetch("/api/auctions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           // Include token if needed for authentication
-          Authorization: `Bearer ${token}`,
+          Authorization: token,
         },
         body: JSON.stringify({
           title: form.name,

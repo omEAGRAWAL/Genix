@@ -1,45 +1,48 @@
 import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import { app } from "../firebaseConfig";
-
-// import { signInSuccess } from "../redux/user/userSlice";
 // import { useNavigate } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+// import { signInSuccess } from "../redux/user/userSlice";
+
 export default function OAuth() {
-  // const navigate = useNavigate();
-  // const dispatch = useDispatch();
   const auth = getAuth(app);
+
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: "select_account" });
 
     try {
       const resultsFromGoogle = await signInWithPopup(auth, provider);
-      console.log(resultsFromGoogle);
-      // const res = await fetch("http://localhost:3000/api/users/register", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({
-      //     first_name: resultsFromGoogle.user.displayName,
-      //     email: resultsFromGoogle.user.email,
-      //     googlePhotoUrl: resultsFromGoogle.user.photoURL,
-      //   }),
-      // });
-      // const data = await res.json();
-      // if (data.success === false) {
-      //   console.log(data.message);
-      // }
+      console.log("Google sign-in results:", resultsFromGoogle);
 
-      // if (data) {
-      //   // di??spatch(signInSuccess(data));
-      //   navigate("/");
-      // }
+      const userProfile = {
+        first_name: resultsFromGoogle.user.displayName,
+        email: resultsFromGoogle.user.email,
+        user_image: resultsFromGoogle.user.photoURL,
+      };
+
+      const res = await fetch(
+        "http://localhost:3000/api/users/register/facebook", // Ensure this endpoint is correct
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userProfile),
+        }
+      );
+
+      const data = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem("token", JSON.stringify(data)); // Ensure token is stored as a string
+        console.log("Registration successful");
+        window.location.href = "/"; // Consider using React Router's navigate method if available
+      } else {
+        console.log("Registration failed:", data.message);
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Google sign-in error:", error);
     }
   };
-  return (
-    <button onClick={handleGoogleSignIn}>
-      {/* <className="w-6 h-6 mr-2" /> */}
-      Sign in with Google
-    </button>
-  );
+
+  return <button onClick={handleGoogleSignIn}>Sign in with Google</button>;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import logo from "../components_login/asset/Vector.png";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -7,6 +8,12 @@ function Nav_bar() {
     const tokenm = localStorage.getItem("token");
     setToken(tokenm);
   }, []);
+
+  function signout() {
+    localStorage.removeItem("token");
+    setToken("");
+    window.location.reload();
+  }
 
   return (
     <div className="bg-[#FFE5F1] " style={{ padding: "16px 128px 0 128px" }}>
@@ -53,11 +60,20 @@ function Nav_bar() {
               </a>
             </li>
             {token ? (
-              <img
-                src={logo}
-                alt="Sample"
-                className="w-12 h-12 rounded-full border-4 border-white hidden md:block"
-              />
+              <>
+                {" "}
+                <img
+                  src={logo}
+                  alt="Sample"
+                  className="w-12 h-12 rounded-full border-4 border-white hidden md:block"
+                />
+                <button
+                  onClick={signout}
+                  className="bg-[#FF3366] text-white px-4 py-2 rounded-md"
+                >
+                  Sign out
+                </button>
+              </>
             ) : (
               <div>
                 <a href="/login" className="hover:font-bold">
