@@ -209,7 +209,10 @@ app.post("/api/bids", authMiddleware, async (req, res) => {
 // View Auction Items
 app.get("/api/auctions", async (req, res) => {
   try {
-    const auctions = await Auction.find().populate("owner", "username");
+    //in newest first order
+    const auctions = await Auction.find()
+      .populate("owner", "username")
+      .sort({ _id: -1 });
     res.json(auctions);
   } catch (error) {
     res.status(400).send(error.message);

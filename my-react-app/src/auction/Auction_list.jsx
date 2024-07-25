@@ -69,7 +69,7 @@ function AuctionList() {
       console.log("Token:", token);
       //Token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmExMTY2MDI0NTQxYjgwNzliNWQzOWUiLCJpYXQiOjE3MjE4ODA4ODV9.55ZjB3T-4JrgGisv0VaRFE4uWmBfSgdg4aR0ebcL6to"
 
-      const response = await fetch("/api/auctions", {
+      const response = await fetch("http://localhost:3000/api/auctions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

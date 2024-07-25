@@ -16,7 +16,16 @@ function Nav_bar() {
   }
 
   return (
-    <div className="bg-[#FFE5F1] " style={{ padding: "16px 128px 0 128px" }}>
+    <div
+      className="bg-[#FFE5F1] "
+      style={{
+        padding: "10px 60px 10px 100px",
+        position: "fixed",
+        width: "100%",
+        top: 0,
+        left: 0,
+      }}
+    >
       <header
         className="flex justify-between items-center "
         style={{ fontFamily: "Manrope" }}

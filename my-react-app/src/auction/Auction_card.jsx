@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 function BidButton({ id }) {
+  const navigate = useNavigate();
+
   const [details, setDetails] = useState(null);
   const [error, setError] = useState(null);
+
+  const handleClick = (bid) => {
+    navigate(`/auction/${bid}`);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,20 +43,22 @@ function BidButton({ id }) {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="flex flex-col w-60 h-[24rem] p-2 m-9 border-red-300 border-4">
+    <div className="flex flex-col w-60 h-[24rem] p-3 m-4 border-gray-300 border max-w-sm rounded overflow-hidden shadow-lg bg-white">
       {details ? (
         <>
           <img
             src={details.auction.image}
             alt={details.auction.title}
-            className="w-full h-40 object-cover"
+            className="w-full h-40 object-cover rounded-xl"
           />
           <div className="mt-2">
             {details.auctionExpired ? (
-              <p className="bg-red-700">Auction has ended</p>
+              <p className="bg-[#DB2721] p-1 rounded-lg text-white w-32 text-center">
+                Auction ended
+              </p>
             ) : (
-              <p className="bg-[#21A67A] p-1 rounded-lg items-center justify-center text-white">
-                Live Auction{" "}
+              <p className="bg-[#21A67A] p-1 rounded-lg text-white w-32 text-center">
+                Live Auction
               </p>
             )}
             <p>{details.auctionExpired}</p>
@@ -61,7 +70,10 @@ function BidButton({ id }) {
               End Date: Days {details.remainingDays} Hour{" "}
               {details.remainingHours}
             </p>
-            <button className="bg-[#1D4ED8] text-white p-2 rounded-md w-60 mt-4 w-full">
+            <button
+              className="bg-gradient-to-r from-[#DB2721] to-[#5AD7FE] text-white p-2 rounded-md mt-4 w-full"
+              onClick={() => handleClick(details.auction._id)} // Fix here
+            >
               Buy Now
             </button>
           </div>
