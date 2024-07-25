@@ -2,7 +2,9 @@ const Auction = require("../models/auction");
 const Bid = require("../models/bid");
 
 exports.placeBid = async (req, res) => {
-  const { amount, auctionItemId } = req.body;
+  const { amount } = req.body;
+  auctionItemId = req.params.id;
+
   try {
     const auction = await Auction.findById(auctionItemId);
     if (!auction) return res.status(404).send("Auction item not found");

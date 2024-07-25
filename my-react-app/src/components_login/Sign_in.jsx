@@ -31,7 +31,6 @@ function Sign_Up() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          
         },
 
         body: JSON.stringify(formData),
@@ -39,7 +38,8 @@ function Sign_Up() {
 
       if (response.ok) {
         const result = await response.json();
-        localStorage.setItem("token", JSON.stringify(result));
+        localStorage.setItem("token", result);
+        window.location.href = "/";
 
         // Handle successful registration
         console.log("Registration successful");

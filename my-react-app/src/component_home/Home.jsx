@@ -4,28 +4,29 @@ import Auction_card from "../auction/Auction_card";
 import { useEffect, useState } from "react";
 import home from "./Asset/home.png";
 import { CgPlayButtonO } from "react-icons/cg";
+// import Bid from "../bid/Place_bid";
 function Home() {
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/api/auctions`);
-        if (response.ok) {
-          const result = await response.json();
-          setDetails(result);
-        } else {
-          setError("Error fetching data");
-        }
-      } catch (error) {
-        setError("Error: " + error.message);
-      } finally {
-        setLoading(false);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/auctions`);
+      if (response.ok) {
+        const result = await response.json();
+        setDetails(result);
+      } else {
+        setError("Error fetching data");
       }
-    };
+    } catch (error) {
+      setError("Error: " + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -44,9 +45,9 @@ function Home() {
       >
         <div
           className="font-inter"
-          style={{
-            "  font-family": "Inter",
-          }}
+          // style={{
+          //   "  font-family": "Inter",
+          // }}
         >
           <div className="text-5xl text-[#0F0C29] ">
             <h1>Your Gateway</h1>
@@ -77,6 +78,7 @@ function Home() {
             ))}
         </div>
       </div>
+      {/* <Bid /> */}
     </div>
   );
 }

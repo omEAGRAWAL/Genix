@@ -2,18 +2,27 @@
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
+import Modal from "../bid/Modal";
+import BiddingForm from "../bid/BiddingForm";
+
 import Nav_bar from "../component_home/Nav_bar";
 import { MdKeyboardArrowLeft } from "react-icons/md";
+
 function UserProfile() {
   const [details, setDetails] = useState(null);
   const [token, setToken] = useState("");
 
   const { id } = useParams();
 
+  //modal opening for bidding form
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-   
     fetch_data();
   }, []);
 
@@ -80,6 +89,27 @@ function UserProfile() {
               <p>Bid amount: {bid.amount}</p>
             </div>
           ))}
+
+          <div>
+            <div className="min-h-screen flex items-center justify-center">
+              <button
+                onClick={openModal}
+                className="px-4 py-2 bg-blue-500 text-white rounded-md"
+              >
+                Place a Bid
+              </button>
+
+              <Modal isOpen={isModalOpen} onClose={closeModal}>
+                <BiddingForm
+                  // minimumBid={details?.auction.minimum_bid}
+                  currentBid={details?.auction.current_bid}
+                  id={details?.auction._id}
+                  timeRemaining={1}
+                  onClose={closeModal}
+                />
+              </Modal>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -31,10 +31,9 @@ function Sign_Up() {
       });
 
       if (response.ok) {
+        window.location.href = "/login";
         // Handle successful registration
         //go to login
-        
-
 
         console.log("Registration successful");
       } else {
