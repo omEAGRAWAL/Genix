@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Modal from "../bid/Modal";
 import BiddingForm from "../bid/BiddingForm";
 import Nav_bar from "../component_home/Nav_bar";
-import { MdKeyboardArrowLeft } from "react-icons/md";
+// import { MdKeyboardArrowLeft } from "react-icons/md";
 
 function UserProfile() {
   const [details, setDetails] = useState(null);
