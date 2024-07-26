@@ -1,9 +1,12 @@
-/* eslint-disable no-unused-vars */
 import logo from "../components_login/asset/Vector.png";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 function Nav_bar() {
   const [token, setToken] = useState("");
+  const [isAuctionDropdownOpen, setIsAuctionDropdownOpen] = useState(false);
+  const [isBiddingDropdownOpen, setIsBiddingDropdownOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+
   useEffect(() => {
     const tokenm = localStorage.getItem("token");
     setToken(tokenm);
@@ -17,7 +20,7 @@ function Nav_bar() {
 
   return (
     <div
-      className="bg-[#FFE5F1] "
+      className="bg-[#FFE5F1]"
       style={{
         padding: "10px 60px 10px 100px",
         position: "fixed",
@@ -27,11 +30,11 @@ function Nav_bar() {
       }}
     >
       <header
-        className="flex justify-between items-center "
+        className="flex justify-between items-center"
         style={{ fontFamily: "Manrope" }}
       >
         <a href="/">
-          <div className="flex items-center ">
+          <div className="flex items-center">
             <img
               src={logo}
               alt="Logo"
@@ -47,17 +50,69 @@ function Nav_bar() {
             </h1>
           </div>
         </a>
-        <div className="flex items-center " id="w">
-          <ul className="flex gap-6 items-center">
-            <li>
+        <div className="flex items-center" id="w">
+          <ul className="flex gap-6 items-center relative">
+            <li
+              className="relative"
+              onMouseEnter={() => setIsAuctionDropdownOpen(true)}
+              onMouseLeave={() => setIsAuctionDropdownOpen(false)}
+            >
               <a href="/auction" className="hover:font-bold">
                 Auctions
               </a>
+              {isAuctionDropdownOpen && (
+                <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                  <a
+                    href="/auctions/upcoming"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  >
+                    Upcoming Auctions
+                  </a>
+                  <a
+                    href="/auctions/live"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  >
+                    Live Auctions
+                  </a>
+                  <a
+                    href="/auctions/past"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  >
+                    Past Auctions
+                  </a>
+                </div>
+              )}
             </li>
-            <li>
+            <li
+              className="relative"
+              onMouseEnter={() => setIsBiddingDropdownOpen(true)}
+              onMouseLeave={() => setIsBiddingDropdownOpen(false)}
+            >
               <a href="#" className="hover:font-bold">
                 Bidding
               </a>
+              {isBiddingDropdownOpen && (
+                <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                  <a
+                    href="/bidding/current"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  >
+                    Current Bids
+                  </a>
+                  <a
+                    href="/bidding/history"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  >
+                    Bid History
+                  </a>
+                  <a
+                    href="/bidding/rules"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  >
+                    Bidding Rules
+                  </a>
+                </div>
+              )}
             </li>
             <li>
               <a href="#" className="hover:font-bold">
@@ -70,22 +125,41 @@ function Nav_bar() {
               </a>
             </li>
             {token ? (
-              <>
-                {" "}
+              <li
+                className="relative"
+                onMouseEnter={() => setIsUserDropdownOpen(true)}
+                onMouseLeave={() => setIsUserDropdownOpen(false)}
+              >
                 <img
                   src={logo}
                   alt="Sample"
                   className="w-12 h-12 rounded-full border-4 border-white hidden md:block"
                 />
-                <button
-                  onClick={signout}
-                  className="bg-[#FF3366] text-white px-4 py-2 rounded-md"
-                >
-                  Sign out
-                </button>
-              </>
+                {isUserDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                    <a
+                      href="/profile"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                    >
+                      Profile
+                    </a>
+                    <a
+                      href="/settings"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                    >
+                      Settings
+                    </a>
+                    <button
+                      onClick={signout}
+                      className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+                    >
+                      Sign out
+                    </button>
+                  </div>
+                )}
+              </li>
             ) : (
-              <div>
+              <div className="flex gap-4">
                 <a href="/login" className="hover:font-bold">
                   Sign in
                 </a>

@@ -58,6 +58,19 @@ exports.viewAuctions = async (req, res) => {
   }
 };
 
+exports.viewAuctionsMy = async (req, res) => {
+  try {
+    
+    const auctions = await Auction.find({ owner: req.user._id })
+      .populate("owner", "username")
+      .sort({ _id: -1 });
+
+    res.json(auctions);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
 exports.viewAuctionDetails = async (req, res) => {
   const { id } = req.params;
   try {

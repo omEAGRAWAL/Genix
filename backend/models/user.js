@@ -1,3 +1,33 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - first_name
+ *         - email
+ *         - password
+ *       properties:
+ *         first_name:
+ *           type: string
+ *         last_name:
+ *           type: string
+ *         email:
+ *           type: string
+ *         password:
+ *           type: string
+ *         user_image:
+ *           type: string
+ *         createdAuctions:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Auction'
+ *         bids:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Bid'
+ */
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
