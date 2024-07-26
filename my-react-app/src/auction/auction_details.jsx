@@ -47,7 +47,7 @@ function UserProfile() {
       <div className="main_body flex flex-col md:flex-row">
         <div className="left ml-16 mt-6 w-1/4">
           <button className="text-[#1D4ED8] text-bold flex flex-row p-3">
-            <MdKeyboardArrowLeft color="#1D4ED8" />
+            {/* <MdKeyboardArrowLeft color="#1D4ED8" /> */}
             Back to catalog
           </button>
 
