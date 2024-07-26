@@ -7,6 +7,7 @@ import {
 } from "firebase/storage";
 import { app } from "../firebaseConfig";
 import Header from "../component_home/Nav_bar";
+
 function AuctionList() {
   const filePickerRef = useRef();
   const [imageFile, setImageFile] = useState(null);
@@ -67,13 +68,11 @@ function AuctionList() {
     try {
       const token = localStorage.getItem("token");
       console.log("Token:", token);
-      //Token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmExMTY2MDI0NTQxYjgwNzliNWQzOWUiLCJpYXQiOjE3MjE4ODA4ODV9.55ZjB3T-4JrgGisv0VaRFE4uWmBfSgdg4aR0ebcL6to"
 
       const response = await fetch("http://localhost:3000/api/auctions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // Include token if needed for authentication
           Authorization: token,
         },
         body: JSON.stringify({
@@ -81,7 +80,7 @@ function AuctionList() {
           description: form.description,
           startingBid: form.price,
           endDate: form.endDate,
-          image: form.image, // Add the image URL to the request body
+          image: form.image,
         }),
       });
 
@@ -105,63 +104,94 @@ function AuctionList() {
   };
 
   return (
-    <div>
+    <div className="pt-16">
       <Header />
-      <form
-        onSubmit={handleSubmit}
-        className="form flex flex-col justify-center items-center"
-      >
-        <input
-          className="border-4"
-          type="file"
-          ref={filePickerRef}
-          style={{ display: "none" }}
-          onChange={handleImageUpload}
-        />
-        <img
-          src={
-            imageUrl ||
-            "https://media-d.global.abb/is/image/abbc/DYK%20YuMi%202:16x9?wid=768&hei=432"
-          }
-          alt="Upload Image"
-          className="rounded-full w-32 h-32"
-          onClick={() => filePickerRef.current.click()}
-        />
-        {uploading && <p>Upload progress: {uploadPercentage}%</p>}
-        {uploadFail && <p>Upload failed. Please try again.</p>}
-        <label>Name</label>
-        <input
-          className="border-4"
-          type="text"
-          placeholder="Name"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
-        <label>Description</label>
-        <input
-          className="border-4"
-          type="text"
-          placeholder="Description"
-          value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
-        />
-        <label>Starting Price</label>
-        <input
-          className="border-4"
-          type="number"
-          placeholder="Price"
-          value={form.price}
-          onChange={(e) => setForm({ ...form, price: e.target.value })}
-        />
-        <label>End Date</label>
-        <input
-          className="border-4"
-          type="datetime-local"
-          value={form.endDate}
-          onChange={(e) => setForm({ ...form, endDate: e.target.value })}
-        />
-        <button type="submit">Submit</button>
-      </form>
+      <div className="max-w-2xl mx-auto mt-10 p-4 bg-white shadow-xl rounded-md">
+        <h1 className="text-2xl font-semibold mb-4">Create Auction</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex flex-col items-center">
+            <input
+              className="hidden"
+              type="file"
+              ref={filePickerRef}
+              onChange={handleImageUpload}
+            />
+            <img
+              src={
+                imageUrl ||
+                "https://media-d.global.abb/is/image/abbc/DYK%20YuMi%202:16x9?wid=768&hei=432"
+              }
+              alt="Upload Image"
+              className="rounded-md w-44 h-34 object-cover cursor-pointer"
+              onClick={() => filePickerRef.current.click()}
+            />
+            {uploading && (
+              <p className="text-gray-500">
+                Upload progress: {uploadPercentage}%
+              </p>
+            )}
+            {uploadFail && (
+              <p className="text-red-500">Upload failed. Please try again.</p>
+            )}
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Name
+            </label>
+            <input
+              type="text"
+              placeholder="Name"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Description
+            </label>
+            <textarea
+              placeholder="Description"
+              value={form.description}
+              onChange={(e) =>
+                setForm({ ...form, description: e.target.value })
+              }
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              rows={5} // Adjust the number of rows to make the textarea larger
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Starting Price
+            </label>
+            <input
+              type="number"
+              placeholder="Price"
+              value={form.price}
+              onChange={(e) => setForm({ ...form, price: e.target.value })}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              End Date
+            </label>
+            <input
+              type="datetime-local"
+              value={form.endDate}
+              onChange={(e) => setForm({ ...form, endDate: e.target.value })}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

@@ -30,22 +30,23 @@ function Nav_bar() {
         className="flex justify-between items-center "
         style={{ fontFamily: "Manrope" }}
       >
-        <div className="flex items-center ">
-          <img
-            src={logo}
-            alt="Logo"
-            width="55.68px"
-            height="52.5px"
-            className="mr-3"
-          />
-          <h1
-            className="text-[#191D23] font-bold text-lg md:text-2xl"
-            style={{ fontFamily: "Manrope" }}
-          >
-            Genix Auctions
-          </h1>
-        </div>
-
+        <a href="/">
+          <div className="flex items-center ">
+            <img
+              src={logo}
+              alt="Logo"
+              width="55.68px"
+              height="52.5px"
+              className="mr-3"
+            />
+            <h1
+              className="text-[#191D23] font-bold text-lg md:text-2xl"
+              style={{ fontFamily: "Manrope" }}
+            >
+              Genix Auctions
+            </h1>
+          </div>
+        </a>
         <div className="flex items-center " id="w">
           <ul className="flex gap-6 items-center">
             <li>

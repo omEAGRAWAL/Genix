@@ -16,7 +16,10 @@ const BiddingForm = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      const b = JSON.stringify({ amount: straightBid });
+      console.log(b);
       const response = await fetch(`http://localhost:3000/api/bids/${id}`, {
         method: "POST",
         headers: {
@@ -33,6 +36,11 @@ const BiddingForm = ({
       console.log(error);
     }
   };
+
+  // Debugging logs
+  console.log("Minimum Bid:", minimumBid);
+  console.log("Current Bid:", currentBid);
+  console.log("Time Remaining:", timeRemaining);
 
   return (
     <div className="w-80 p-6 bg-white shadow-md rounded-lg">
@@ -69,6 +77,7 @@ const BiddingForm = ({
         </div>
         <button
           type="submit"
+          onClick={handleSubmit}
           className="w-20 py-1 bg-gradient-to-r from-[#1D4ED8] to-[#5AD7FE] text-white rounded-md hover:bg-blue-600"
         >
           Submit
