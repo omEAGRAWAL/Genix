@@ -82,8 +82,7 @@ function UserProfile() {
       <NavBar />
       <div className="main_body flex flex-col md:flex-row">
         <div className="left ml-16 mt-6 w-1/4">
-
-          <a href="/"   className="text-[#1D4ED8] text-bold flex flex-row p-3">
+          <a href="/" className="text-[#1D4ED8] text-bold flex flex-row p-3">
             Back to catalog
           </a>
 
