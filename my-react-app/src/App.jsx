@@ -7,6 +7,7 @@ import Auction_list from "./auction/Auction_list";
 import Auction from "./auction/Auction_details";
 import Auction_edit from "./auction/Auction_edit";
 import My_auction from "./auction/My_auction";
+import My_bid from "./bid/My_bid";
 
 function App() {
   return (
@@ -16,11 +17,12 @@ function App() {
           <Route path="/signup" element={<Sign_Up />} />
           <Route path="/login" element={<Sign_in />} />
           <Route path="/" element={<Home />} />
-          <Route path="/auction" element={<Auction_list />} />
+          <Route path="/auction/new" element={<Auction_list />} />
           <Route path="/auction/:id" element={<Auction />} />
 
           <Route path="/auction/edit/:id" element={<Auction_edit />} />
           <Route path="/auction/my" element={<My_auction />} />
+          <Route path="/bid/my" element={<My_bid />} />
 
           {/* Add more routes as needed */}
         </Routes>

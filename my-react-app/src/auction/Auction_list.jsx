@@ -7,8 +7,10 @@ import {
 } from "firebase/storage";
 import { app } from "../firebaseConfig";
 import Header from "../component_home/Nav_bar";
+import { useNavigate } from 'react-router-dom';
 
 function AuctionList() {
+  const navigate = useNavigate();
   const filePickerRef = useRef();
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
@@ -94,6 +96,9 @@ function AuctionList() {
         });
         setImageFile(null);
         setImageUrl(null);
+        navigate('/auction/my');
+
+
       } else {
         const error = await response.text();
         alert(`Error: ${error}`);

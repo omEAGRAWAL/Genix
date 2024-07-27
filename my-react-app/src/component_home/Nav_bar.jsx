@@ -54,50 +54,58 @@ function Nav_bar() {
           <ul className="flex gap-6 items-center relative">
             <li
               className="relative"
-              onMouseEnter={() => setIsAuctionDropdownOpen(true)}
-              onMouseLeave={() => setIsAuctionDropdownOpen(false)}
+              onMouseEnter={() => {
+                setIsAuctionDropdownOpen(true);
+                //wait for 2 sec
+                setTimeout(() => {
+                  setIsAuctionDropdownOpen(false);
+                }, 1500);
+              }}
+
+              // onMouseLeave={() => setIsAuctionDropd  ownOpen(false)}
             >
-              <a href="/auction" className="hover:font-bold">
-                Auctions
-              </a>
+              <a className="hover:font-bold">Auctions</a>
               {isAuctionDropdownOpen && (
                 <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
                   <a
-                    href="/auctions/upcoming"
+                    href="/auction/my"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                   >
-                    Upcoming Auctions
+                    My Auctions
                   </a>
                   <a
-                    href="/auctions/live"
+                    href="/auction/new"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                   >
-                    Live Auctions
+                    New Auctions
                   </a>
-                  <a
+                  {/* <a
                     href="/auctions/past"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                   >
                     Past Auctions
-                  </a>
+                  </a> */}
                 </div>
               )}
             </li>
             <li
               className="relative"
-              onMouseEnter={() => setIsBiddingDropdownOpen(true)}
-              onMouseLeave={() => setIsBiddingDropdownOpen(false)}
+              onMouseEnter={() => {
+                setIsBiddingDropdownOpen(true);
+                setTimeout(() => {
+                  setIsBiddingDropdownOpen(false);
+                }, 1500);
+              }}
+              // onMouseLeave={() => setIsBiddingDropdownOpen(false)}
             >
-              <a href="#" className="hover:font-bold">
-                Bidding
-              </a>
+              <a className="hover:font-bold">Bids</a>
               {isBiddingDropdownOpen && (
                 <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
                   <a
-                    href="/bidding/current"
+                    href="/bid/my"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                   >
-                    Current Bids
+                    My Bids
                   </a>
                   <a
                     href="/bidding/history"
@@ -127,8 +135,13 @@ function Nav_bar() {
             {token ? (
               <li
                 className="relative"
-                onMouseEnter={() => setIsUserDropdownOpen(true)}
-                onMouseLeave={() => setIsUserDropdownOpen(false)}
+                onMouseEnter={() => {
+                  setIsUserDropdownOpen(true);
+                  setTimeout(() => {
+                    setIsUserDropdownOpen(false);
+                  }, 1000);
+                }}
+                // onMouseLeave={() => setIsUserDropdownOpen(false)}
               >
                 <img
                   src={logo}

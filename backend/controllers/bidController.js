@@ -87,3 +87,13 @@ exports.viewBidHistory = async (req, res) => {
     res.status(400).send(error.message);
   }
 };
+
+exports.myBid = async (req, res) => {
+  try {
+    const id = req.user._id;
+    const bids = await Bid.find({ bidder: id }).populate("auctionItem");
+    res.json(bids);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};

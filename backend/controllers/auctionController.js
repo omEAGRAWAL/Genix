@@ -60,7 +60,6 @@ exports.viewAuctions = async (req, res) => {
 
 exports.viewAuctionsMy = async (req, res) => {
   try {
-    
     const auctions = await Auction.find({ owner: req.user._id })
       .populate("owner", "username")
       .sort({ _id: -1 });
@@ -107,18 +106,25 @@ exports.viewAuctionDetails = async (req, res) => {
 
 exports.addReview = async (req, res) => {
   const { rating, review } = req.body;
+  const auctionId = req.params.id; // Assuming the route parameter is 'id'
+
   try {
-    const auction = await Auction.findById(req.params.id);
-    if (!auction) return res.status(404).send("Auction item not found");
+    const auction = await Auction.findById(auctionId);
+    if (!auction) {
+      return res.status(404).send("Auction item not found");
+    }
+
     const reviewObj = {
       user: req.user._id,
       rating,
       review,
     };
+
     auction.reviews.push(reviewObj);
     await auction.save();
     res.status(201).send("Review added successfully");
   } catch (error) {
-    res.status(400).send(error.message);
+    console.error(error); // Log the full error for debugging
+    res.status(400).send("An error occurred while adding the review.");
   }
 };

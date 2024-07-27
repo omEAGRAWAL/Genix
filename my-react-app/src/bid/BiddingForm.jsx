@@ -18,8 +18,6 @@ const BiddingForm = ({
     e.preventDefault();
 
     try {
-      const b = JSON.stringify({ amount: straightBid });
-      console.log(b);
       const response = await fetch(`http://localhost:3000/api/bids/${id}`, {
         method: "POST",
         headers: {
@@ -28,19 +26,19 @@ const BiddingForm = ({
         },
         body: JSON.stringify({ amount: straightBid }),
       });
-      const data = await response.json();
-      console.log(data);
-      // Close modal after successful submission
-      onClose();
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        // Close modal after successful submission
+        onClose();
+      } else {
+        // Handle errors (e.g., display a message to the user)
+        console.log("Bid submission failed:", response.statusText);
+      }
     } catch (error) {
       console.log(error);
     }
   };
-
-  // Debugging logs
-  console.log("Minimum Bid:", minimumBid);
-  console.log("Current Bid:", currentBid);
-  console.log("Time Remaining:", timeRemaining);
 
   return (
     <div className="w-80 p-6 bg-white shadow-md rounded-lg">
@@ -70,14 +68,13 @@ const BiddingForm = ({
           />
         </label>
         <div className="text-sm">
-          <p>Minimum Bid: </p>
-          <p className="text-xl font-bold"> ${minimumBid}</p>
+          <p>Minimum Bid:</p>
+          <p className="text-xl font-bold">${minimumBid}</p>
           <p>Current Bid: ${currentBid}</p>
           <p>Ends in: {timeRemaining}</p>
         </div>
         <button
           type="submit"
-          onClick={handleSubmit}
           className="w-20 py-1 bg-gradient-to-r from-[#1D4ED8] to-[#5AD7FE] text-white rounded-md hover:bg-blue-600"
         >
           Submit

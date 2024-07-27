@@ -53,15 +53,18 @@ function UserProfile() {
     const reviewData = { rating, review };
     // Send review
     try {
-      const res = await fetch(`http://localhost:3000/api/reviews/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token, // Include token for authenticated request
-        },
-        body: JSON.stringify(reviewData),
-      });
-
+      const res = await fetch(
+        `http://localhost:3000/api/auctions/reviews/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token, // Include token for authenticated request
+          },
+          body: JSON.stringify(reviewData),
+        }
+      );
+      console.log(res);
       if (res.ok) {
         alert("Review submitted successfully!");
         setRating(0);
@@ -112,68 +115,67 @@ function UserProfile() {
           <p className="pt-8">{details?.auction.description}</p>
           {/* <Reveiw itemId={id} /> */}
 
-          <form onSubmit={submitReveiw}>
-            <div className="mb-4">
-              <label
-                htmlFor="rating"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Rating (1-5 stars)
-              </label>
-              <select
-                id="rating"
-                value={rating}
-                onChange={(e) => setRating(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              >
-                <option value="" disabled>
-                  Select rating
-                </option>
-                {[1, 2, 3, 4, 5].map((value) => (
-                  <option key={value} value={value}>
-                    {value} {value === 1 ? "star" : "stars"}
+          <div className="w-1/2 pt-28 ">
+            <form onSubmit={submitReveiw}>
+              <div className="mb-4">
+                <label
+                  htmlFor="rating"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Rating (1-5 stars)
+                </label>
+                <select
+                  id="rating"
+                  value={rating}
+                  onChange={(e) => setRating(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                >
+                  <option value="" disabled>
+                    Select rating
                   </option>
-                ))}
-              </select>
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="comment"
-                className="block text-sm font-medium text-gray-700"
+                  {[1, 2, 3, 4, 5].map((value) => (
+                    <option key={value} value={value}>
+                      {value} {value === 1 ? "star" : "stars"}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="comment"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Comment
+                </label>
+                <textarea
+                  id="comment"
+                  value={review}
+                  onChange={(e) => setReview(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="bg-blue-500 text-white p-2 rounded-md w-60"
               >
-                Comment
-              </label>
-              <textarea
-                id="comment"
-                value={review}
-                onChange={(e) => setReview(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              ></textarea>
+                Submit Review
+              </button>
+            </form>
+            <div>
+              {/* {details?.auction.reveiws.map((reveiws) => console.log(reveiws))} */}
             </div>
-            <button
-              type="submit"
-              className="bg-blue-500 text-white p-2 rounded-md w-60"
-            >
-              Submit Review
-            </button>
-          </form>
-          <div>
-            {/* {details?.auction.reveiws.map((reveiws) => console.log(reveiws))} */}
-          </div>
 
-          <div className="mt-8">
-            <h1 className="text-lg font-bold">Reviews</h1>
-            <div className="border-1 rounded-md p-2 mt-4">
-              <p className="font-bold">User 1</p>
-              <p>Rating: {/* dynamic rating */}</p>
-              <p>Review: This is a great product</p>
-            </div>
-            <div className="border-1 rounded-md p-2 mt-4">
-              <p className="font-bold">User 2</p>
-              <p>Rating: 4</p>
-              <p>Review: This is a good product</p>
+            <div className="mt-8">
+              {/* //display the reveiws list
+               */}
+              {details?.auction.reviews.map((review) => (
+                <div key={review._id} className="border-1 rounded-md p-2 mt-4">
+                  <p className="font-bold">Rating: {review.rating}</p>
+                  <p>Comment: {review.review}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

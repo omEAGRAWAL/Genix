@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import Auction_card from "./My_auction_card"; // Adjust the path as needed
-
+import Nav_bar from "../component_home/Nav_bar";
 function MyAuctions() {
   const [auctions, setAuctions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,7 +43,8 @@ function MyAuctions() {
 
   return (
     <div className="pt-16">
-      <div className="max-w-4xl mx-auto mt-10 p-4 bg-white shadow-xl rounded-md">
+      <Nav_bar />
+      <div className="max-w-4xl mx-auto mt-10 p-4 bg-white shadow-xl rounded-md pt-16">
         <h1 className="text-2xl font-semibold mb-4">My Listed Auctions</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {auctions.length > 0 ? (

@@ -72,8 +72,7 @@ function Home() {
       </div>
       <div className=" flex ">
         <div className="m-8  flex flex-wrap items-center justify-center">
-          
-          {details  &&
+          {details &&
             details.map((auction) => (
               <Auction_card key={auction._id} id={auction._id} />
             ))}

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 import {
   getDownloadURL,
@@ -48,7 +49,7 @@ function EditAuction() {
           endDate: auction.auction.endDate || "",
           image: auction.auction.image || "",
         });
-        setImageUrl(auction.image || "");
+        setImageUrl(auction.auction.image || "");
       } else {
         alert("Failed to fetch auction data.");
       }
@@ -103,7 +104,7 @@ function EditAuction() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Ensure token is in the correct format
+          Authorization: token, // Ensure token is in the correct format
         },
         body: JSON.stringify({
           title: form.name,
@@ -140,7 +141,7 @@ function EditAuction() {
               onChange={handleImageUpload}
             />
             <img
-              src={imageUrl || "https://via.placeholder.com/150"}
+              src={form.image || "https://via.placeholder.com/150"}
               alt="Upload Image"
               className="rounded-md w-44 h-34 object-cover cursor-pointer"
               onClick={() => filePickerRef.current.click()}

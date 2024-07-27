@@ -17,6 +17,6 @@ router.delete("/:id", authMiddleware, deleteAuction);
 router.get("/", viewAuctions);
 router.get("/my", authMiddleware, viewAuctionsMy);
 router.get("/:id", viewAuctionDetails);
-router.post("reviews/:id", authMiddleware, addReview);
+router.post("/reviews/:id", authMiddleware, addReview);
 
 module.exports = router;
