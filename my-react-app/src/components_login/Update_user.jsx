@@ -38,7 +38,7 @@ function UserEdit() {
   const fetchUserData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:3000/api/users/user", {
+      const response = await fetch("/api/users/user", {
         method: "GET",
         headers: {
           Authorization: token,
@@ -104,7 +104,7 @@ function UserEdit() {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await fetch("http://localhost:3000/api/users/user", {
+      const response = await fetch("/api/users/user", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

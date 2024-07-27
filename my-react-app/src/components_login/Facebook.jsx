@@ -9,7 +9,7 @@ function Facebook() {
   const handleLogin = async (profile) => {
     try {
       const response = await fetch(
-        "http://localhost:3000/api/users/register/facebook",
+        "/api/users/register/facebook",
         {
           method: "POST",
           headers: {

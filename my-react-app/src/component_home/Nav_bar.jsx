@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import logo from "../components_login/asset/Vector.png";
 import { useEffect, useState } from "react";
 
@@ -29,7 +30,7 @@ function Nav_bar() {
         console.log("No token available");
         return;
       }
-      const response = await fetch("http://localhost:3000/api/users/user", {
+      const response = await fetch("/api/users/user", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

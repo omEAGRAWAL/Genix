@@ -18,7 +18,7 @@ const BiddingForm = ({
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/api/bids/${id}`, {
+      const response = await fetch(`/api/bids/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

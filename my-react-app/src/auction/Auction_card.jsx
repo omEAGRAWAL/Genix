@@ -14,16 +14,13 @@ function BidButton({ id }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/api/auctions/${id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              // Authorization: token, // Uncomment if you have a token
-            },
-          }
-        );
+        const response = await fetch(`/api/auctions/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: token, // Uncomment if you have a token
+          },
+        });
         if (response.ok) {
           const result = await response.json();
           setDetails(result);

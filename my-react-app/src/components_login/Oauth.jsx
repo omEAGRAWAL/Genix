@@ -22,7 +22,7 @@ export default function OAuth() {
       };
 
       const res = await fetch(
-        "http://localhost:3000/api/users/register/facebook", // Ensure this endpoint is correct
+        "/api/users/register/facebook", // Ensure this endpoint is correct
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

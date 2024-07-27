@@ -89,5 +89,8 @@ const processEndedAuctions = async () => {
   }
 };
 
+//export
+
+module.exports = processEndedAuctions;
 // Schedule the cron job
-cron.schedule("* * * * *", processEndedAuctions);
+// cron.schedule("* * * * *", processEndedAuctions);

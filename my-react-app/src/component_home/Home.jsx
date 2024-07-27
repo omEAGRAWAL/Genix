@@ -12,7 +12,7 @@ function Home() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/auctions`);
+      const response = await fetch(`/api/auctions`);
       if (response.ok) {
         const result = await response.json();
         setDetails(result);

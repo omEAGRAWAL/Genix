@@ -10,7 +10,7 @@ function My_bid() {
   useEffect(() => {
     const fetchBids = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/bids/mybid", {
+        const response = await fetch("/api/bids/mybid", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
