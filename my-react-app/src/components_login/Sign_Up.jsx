@@ -21,6 +21,13 @@ function Sign_Up() {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    // Check if any field is empty
+    if (!formData.first_name || !formData.last_name || !formData.email || !formData.password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:3000/api/users/register", {
         method: "POST",
@@ -32,12 +39,9 @@ function Sign_Up() {
 
       if (response.ok) {
         window.location.href = "/login";
-        // Handle successful registration
-        //go to login
-
         console.log("Registration successful");
       } else {
-        // Handle errors
+        alert("Registration failed. Please try again.");
         console.log("Registration failed");
       }
     } catch (error) {

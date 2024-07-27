@@ -39,6 +39,7 @@ exports.placeBid = async (req, res) => {
     });
 
     if (!auction) return res.status(404).send("Auction item not found");
+    if (!auction.ended) return res.status(400).send("Auction has ended");
 
     if (amount <= auction.currentBid)
       return res.status(400).send("Bid must be higher than current bid");

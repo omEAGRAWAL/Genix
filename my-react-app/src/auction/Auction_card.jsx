@@ -4,12 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 function BidButton({ id }) {
   const navigate = useNavigate();
-
   const [details, setDetails] = useState(null);
   const [error, setError] = useState(null);
 
-  const handleClick = (bid) => {
-    navigate(`/auction/${bid}`);
+  const handleClick = (auctionId) => {
+    navigate(`/auction/${auctionId}`);
   };
 
   useEffect(() => {
@@ -30,7 +29,7 @@ function BidButton({ id }) {
           setDetails(result);
           console.log(result);
         } else {
-          setError("Failed to fetch data");
+          setError("Failed to fetch auction details");
         }
       } catch (error) {
         setError("Error: " + error.message);
@@ -40,10 +39,10 @@ function BidButton({ id }) {
     fetchData();
   }, [id]);
 
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div className="text-red-500">Error: {error}</div>;
 
   return (
-    <div className="flex flex-col w-60 h-[24rem] p-3 m-4 border-gray-300 border max-w-sm rounded overflow-hidden shadow-lg bg-white">
+    <div className="flex flex-col w-72 h-[28rem] p-3 m-4 border-gray-300 border max-w-sm rounded overflow-hidden shadow-lg bg-white">
       {details ? (
         <>
           <img
@@ -54,27 +53,35 @@ function BidButton({ id }) {
           <div className="mt-2">
             {details.auctionExpired ? (
               <p className="bg-[#DB2721] p-1 rounded-lg text-white w-32 text-center">
-                Auction ended
+                Auction Ended
               </p>
             ) : (
               <p className="bg-[#21A67A] p-1 rounded-lg text-white w-32 text-center">
                 Live Auction
               </p>
             )}
-            <p>{details.auctionExpired}</p>
-            <h3>{details.auction.title}</h3>
-            {/* <p>{details.auction.description}</p> */}
-            <p>Minimum Bid: ${details.minBid}</p>
-            <p>Maximum Bid: ${details.maxBid}</p>
-            <p>
-              End Date: Days {details.remainingDays} Hour{" "}
-              {details.remainingHours}
+            <h3 className="text-xl font-semibold p-1">
+              {details.auction.title}
+            </h3>
+            <div className="flex flex-row p-1">
+              <p className="pr-4 order-1 grow">Minimum Bid:</p>
+              <h1 className="font-semibold order-2 text-xl">
+                ${details.minBid}
+              </h1>
+            </div>
+            <div className="flex flex-row p-1">
+              <p className="pr-4 grow">Current Bid:</p>
+              <h1 className="font-semibold text-xl ">${details.maxBid}</h1>
+            </div>
+            <p className="p-1">
+              Ends in: {details.remainingDays} Days {details.remainingHours}{" "}
+              Hours
             </p>
             <button
               className="bg-gradient-to-r from-[#DB2721] to-[#5AD7FE] text-white p-2 rounded-md mt-4 w-full"
-              onClick={() => handleClick(details.auction._id)} // Fix here
+              onClick={() => handleClick(details.auction._id)}
             >
-              Buy Now
+              {details.auctionExpired ? "View Auction" : "Place Bid"}
             </button>
           </div>
         </>

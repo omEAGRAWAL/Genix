@@ -6,58 +6,59 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { app } from "../firebaseConfig";
 import Header from "../component_home/Nav_bar";
 
-function EditAuction() {
-  const { id } = useParams(); // Get the auction ID from the URL
-  const navigate = useNavigate(); // For navigation after update
+function UserEdit() {
+  const navigate = useNavigate();
   const filePickerRef = useRef();
-  const [auction, setAuction] = useState({});
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [uploadFail, setUploadFail] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [form, setForm] = useState({
-    name: "",
-    description: "",
-    price: "",
-    endDate: "",
-    image: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    user_image: "",
+    new_password: "",
   });
 
   useEffect(() => {
-    fetchAuctionData(); // Fetch existing auction data when the component mounts
-  }, [id]);
+    fetchUserData();
+  }, []);
 
   useEffect(() => {
     if (imageFile) uploadImage();
   }, [imageFile]);
 
-  const fetchAuctionData = async () => {
+  const fetchUserData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/auctions/${id}`, {
+      const token = localStorage.getItem("token");
+      const response = await fetch("http://localhost:3000/api/users/user", {
         method: "GET",
+        headers: {
+          Authorization: token,
+        },
       });
       if (response.ok) {
-        const auction = await response.json();
-        setAuction(auction);
-
+        const user = await response.json();
         setForm({
-          name: auction.auction.title || "",
-          description: auction.auction.description || "",
-          price: auction.auction.startingBid || "",
-          endDate: auction.auction.endDate || "",
-          image: auction.auction.image || "",
+          first_name: user.first_name || "",
+          last_name: user.last_name || "",
+          email: user.email || "",
+          password: "", // Optionally leave this out or handle it differently
+          user_image: user.user_image || "",
         });
-        setImageUrl(auction.auction.image || "");
+        setImageUrl(user.user_image || "");
       } else {
-        alert("Failed to fetch auction data.");
+        alert("Failed to fetch user data.");
       }
     } catch (error) {
-      console.error("Error fetching auction data", error);
+      console.error("Error fetching user data", error);
     }
   };
 
@@ -90,7 +91,7 @@ function EditAuction() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImageUrl(downloadURL);
-          setForm((prevForm) => ({ ...prevForm, image: downloadURL }));
+          setForm((prevForm) => ({ ...prevForm, user_image: downloadURL }));
           setUploadFail(false);
           setUploading(false);
         });
@@ -103,30 +104,24 @@ function EditAuction() {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await fetch(`http://localhost:3000/api/auctions/${id}`, {
+      const response = await fetch("http://localhost:3000/api/users/user", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: token, // Ensure token is in the correct format
+          Authorization: token,
         },
-        body: JSON.stringify({
-          title: form.name,
-          description: form.description,
-          startingBid: form.price,
-          endDate: form.endDate,
-          image: form.image,
-        }),
+        body: JSON.stringify(form),
       });
 
       if (response.ok) {
-        alert("Auction item updated successfully");
+        alert("User data updated successfully");
         navigate("/"); // Redirect to another page after successful update
       } else {
         const error = await response.text();
         alert(`Error: ${error}`);
       }
     } catch (error) {
-      console.error("Error updating auction", error);
+      console.error("Error updating user data", error);
     }
   };
 
@@ -134,7 +129,7 @@ function EditAuction() {
     <div className="pt-16">
       <Header />
       <div className="max-w-2xl mx-auto mt-10 p-4 bg-white shadow-xl rounded-md">
-        <h1 className="text-2xl font-semibold mb-4">Edit Auction</h1>
+        <h1 className="text-2xl font-semibold mb-4">Edit User Profile</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col items-center">
             <input
@@ -144,7 +139,7 @@ function EditAuction() {
               onChange={handleImageUpload}
             />
             <img
-              src={form.image || "https://via.placeholder.com/150"}
+              src={imageUrl || "https://via.placeholder.com/150"}
               alt="Upload Image"
               className="rounded-md w-44 h-34 object-cover cursor-pointer"
               onClick={() => filePickerRef.current.click()}
@@ -160,76 +155,92 @@ function EditAuction() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Name
+              First Name
             </label>
             <input
               type="text"
-              placeholder="Name"
-              value={form.name || ""}
-              onChange={(e) =>
-                setForm((prevForm) => ({ ...prevForm, name: e.target.value }))
-              }
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Description
-            </label>
-            <textarea
-              placeholder="Description"
-              value={form.description || ""}
+              placeholder="First Name"
+              value={form.first_name || ""}
               onChange={(e) =>
                 setForm((prevForm) => ({
                   ...prevForm,
-                  description: e.target.value,
+                  first_name: e.target.value,
                 }))
               }
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              rows={5}
             />
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Starting Price
+              Last Name
             </label>
             <input
-              type="number"
-              placeholder="Price"
-              value={form.price || ""}
+              type="text"
+              placeholder="Last Name"
+              value={form.last_name || ""}
               onChange={(e) =>
-                setForm((prevForm) => ({ ...prevForm, price: e.target.value }))
+                setForm((prevForm) => ({
+                  ...prevForm,
+                  last_name: e.target.value,
+                }))
               }
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          {!auction.ended ? (
-            <p className="text-red-500">This auction has ended</p>
-          ) : (
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                End Date
-              </label>
-              <input
-                type="datetime-local"
-                value={form.endDate || ""}
-                onChange={(e) =>
-                  setForm((prevForm) => ({
-                    ...prevForm,
-                    endDate: e.target.value,
-                  }))
-                }
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          )}
-
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
+            <input
+              type="email"
+              placeholder="Email"
+              value={form.email || ""}
+              onChange={(e) =>
+                setForm((prevForm) => ({ ...prevForm, email: e.target.value }))
+              }
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              disabled
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <input
+              type="password"
+              placeholder="Password"
+              value={form.password || ""}
+              onChange={(e) =>
+                setForm((prevForm) => ({
+                  ...prevForm,
+                  password: e.target.value,
+                }))
+              }
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              New Password
+            </label>
+            <input
+              type="password"
+              placeholder="New Password"
+              // value={form.password || ""}
+              onChange={(e) =>
+                setForm((prevForm) => ({
+                  ...prevForm,
+                  new_password: e.target.value,
+                }))
+              }
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
           <button
             type="submit"
             className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            Update Auction
+            Update Profile
           </button>
         </form>
       </div>
@@ -237,4 +248,4 @@ function EditAuction() {
   );
 }
 
-export default EditAuction;
+export default UserEdit;

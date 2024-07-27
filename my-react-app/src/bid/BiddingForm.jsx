@@ -33,10 +33,13 @@ const BiddingForm = ({
         onClose();
       } else {
         // Handle errors (e.g., display a message to the user)
+        const error = await response.text();
+        alert(error);
         console.log("Bid submission failed:", response.statusText);
       }
     } catch (error) {
       console.log(error);
+      alert(`alert ${error}`);
     }
   };
 

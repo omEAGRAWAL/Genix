@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Modal from "../bid/Modal";
 import BiddingForm from "../bid/BiddingForm";
-import Nav_bar from "../component_home/Nav_bar";
-import Reveiw from "./Auction_reveiw";
+import NavBar from "../component_home/Nav_bar";
+// import Review from "./Auction_review";
 
 function UserProfile() {
   const [details, setDetails] = useState(null);
@@ -12,46 +12,47 @@ function UserProfile() {
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [review, setReview] = useState("");
-  const [rating, setRating] = useState(0);
-  const [error, setError] = useState(null); // Added for error handling
+  const [rating, setRating] = useState(1);
+  const [error, setError] = useState(null);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setToken(token);
-    fetch_data(token);
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+    fetchData(storedToken);
   }, []);
 
-  const fetch_data = async (token) => {
+  const fetchData = async (token) => {
     try {
       const response = await fetch(`http://localhost:3000/api/auctions/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: token, // Assuming JWT token
+          Authorization: token,
         },
       });
       if (response.ok) {
         const result = await response.json();
-        console.log(result);
         setDetails(result);
       } else {
         setError("Failed to fetch auction details.");
       }
     } catch (error) {
-      console.error("Error:", error);
       setError("An error occurred while fetching auction details.");
     }
   };
 
-  const submitReveiw = async (e) => {
+  const submitReview = async (e) => {
     e.preventDefault();
-    console.log("Review submitted");
+
+    if (!token) {
+      alert("Please login to submit a review.");
+      return;
+    }
 
     const reviewData = { rating, review };
-    // Send review
     try {
       const res = await fetch(
         `http://localhost:3000/api/auctions/reviews/${id}`,
@@ -59,34 +60,32 @@ function UserProfile() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: token, // Include token for authenticated request
+            Authorization: token,
           },
           body: JSON.stringify(reviewData),
         }
       );
-      console.log(res);
       if (res.ok) {
         alert("Review submitted successfully!");
-        setRating(0);
+        setRating(1);
         setReview("");
       } else {
         alert("Failed to submit review. Please try again.");
       }
     } catch (error) {
-      console.error("Error:", error);
       alert("An error occurred while submitting your review.");
     }
   };
 
   return (
     <div className="pt-16">
-      <Nav_bar />
+      <NavBar />
       <div className="main_body flex flex-col md:flex-row">
         <div className="left ml-16 mt-6 w-1/4">
-          <button className="text-[#1D4ED8] text-bold flex flex-row p-3">
-            {/* <MdKeyboardArrowLeft color="#1D4ED8" /> */}
+
+          <a href="/"   className="text-[#1D4ED8] text-bold flex flex-row p-3">
             Back to catalog
-          </button>
+          </a>
 
           {details && (
             <>
@@ -96,8 +95,8 @@ function UserProfile() {
                 className="w-60 h-46 border-1 rounded-md pt-9"
               />
               <h1 className="text-lg font-bold">Bid</h1>
-              <p className="pt-8">Current bid: {details.auction.current_bid}</p>
-              <p>Minimum bid: {details.auction.minimum_bid}</p>
+              <p className="pt-8">Current bid: {details.auction.currentBid}</p>
+              <p>Minimum bid: {details.auction.minimumBid}</p>
               <input
                 type="text"
                 placeholder="Enter your bid"
@@ -113,10 +112,9 @@ function UserProfile() {
         <div className="middle m-12 w-1/2">
           <h1 className="text-lg font-bold">Description</h1>
           <p className="pt-8">{details?.auction.description}</p>
-          {/* <Reveiw itemId={id} /> */}
 
           <div className="w-1/2 pt-28 ">
-            <form onSubmit={submitReveiw}>
+            <form onSubmit={submitReview}>
               <div className="mb-4">
                 <label
                   htmlFor="rating"
@@ -163,13 +161,8 @@ function UserProfile() {
                 Submit Review
               </button>
             </form>
-            <div>
-              {/* {details?.auction.reveiws.map((reveiws) => console.log(reveiws))} */}
-            </div>
 
             <div className="mt-8">
-              {/* //display the reveiws list
-               */}
               {details?.auction.reviews.map((review) => (
                 <div key={review._id} className="border-1 rounded-md p-2 mt-4">
                   <p className="font-bold">Rating: {review.rating}</p>
@@ -196,10 +189,10 @@ function UserProfile() {
 
             <Modal isOpen={isModalOpen} onClose={closeModal}>
               <BiddingForm
-                minimumBid={details?.auction.minimum_bid}
-                currentBid={details?.auction.current_bid}
+                minimumBid={details?.auction.minimumBid}
+                currentBid={details?.auction.currentBid}
                 id={details?.auction._id}
-                timeRemaining={details?.auction.time_remaining}
+                timeRemaining={details?.auction.timeRemaining}
                 onClose={closeModal}
               />
             </Modal>

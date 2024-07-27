@@ -20,6 +20,7 @@ function Facebook() {
             last_name: profile.last_name,
             email: profile.email,
             password: profile.id,
+            user_image: profile.image,
           }),
         }
       );

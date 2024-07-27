@@ -36,11 +36,16 @@ exports.updateAuction = async (req, res) => {
 
 exports.deleteAuction = async (req, res) => {
   try {
-    const auction = await Auction.findById(req.params.id);
+    // Find and delete the auction by its ID
+    const auction = await Auction.findByIdAndDelete(req.params.id);
+
+    // Check if auction was found
     if (!auction) return res.status(404).send("Auction item not found");
+
+    // Check if the user has permission to delete the auction
     if (auction.owner.toString() !== req.user._id)
       return res.status(403).send("Access denied");
-    await auction.remove();
+
     res.send("Auction item deleted successfully");
   } catch (error) {
     res.status(400).send(error.message);

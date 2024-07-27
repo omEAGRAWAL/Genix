@@ -44,6 +44,8 @@ function Sign_Up() {
         // Handle successful registration
         console.log("Registration successful");
       } else {
+        console.log(response);
+        alert("Invalid email or password. Please try again.");
         // Handle errors
         console.log("Registration failed");
       }
