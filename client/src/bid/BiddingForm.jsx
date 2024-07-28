@@ -17,6 +17,11 @@ const BiddingForm = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!straightBid || parseFloat(straightBid) < minimumBid) {
+      alert("Please enter a valid bid amount above the minimum bid.");
+      return;
+    }
+
     try {
       const response = await fetch(`/api/bids/${id}`, {
         method: "POST",
@@ -26,20 +31,19 @@ const BiddingForm = ({
         },
         body: JSON.stringify({ amount: straightBid }),
       });
+
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        // Close modal after successful submission
-        onClose();
+        onClose(); // Close modal after successful submission
       } else {
-        // Handle errors (e.g., display a message to the user)
         const error = await response.text();
-        alert(error);
+        alert(`Bid submission failed: ${error}`);
         console.log("Bid submission failed:", response.statusText);
       }
     } catch (error) {
-      console.log(error);
-      alert(`alert ${error}`);
+      console.log("Error submitting bid:", error);
+      alert(`An error occurred while submitting your bid: ${error.message}`);
     }
   };
 
@@ -58,9 +62,10 @@ const BiddingForm = ({
             onChange={handleStraightBidChange}
             placeholder="$"
             className="mt-1 p-2 border border-gray-300 rounded-md"
+            required
           />
         </label>
-        <label className="flex flex-col">
+        {/* <label className="flex flex-col">
           <span>Maximum bid</span>
           <input
             type="number"
@@ -69,7 +74,7 @@ const BiddingForm = ({
             placeholder="$"
             className="mt-1 p-2 border border-gray-300 rounded-md"
           />
-        </label>
+        </label> */}
         <div className="text-sm">
           <p>Minimum Bid:</p>
           <p className="text-xl font-bold">${minimumBid}</p>

@@ -1,10 +1,8 @@
-/* eslint-disable no-unused-vars */
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Modal from "../bid/Modal";
 import BiddingForm from "../bid/BiddingForm";
 import NavBar from "../component_home/Nav_bar";
-// import Review from "./Auction_review";
 
 function UserProfile() {
   const [details, setDetails] = useState(null);
@@ -81,8 +79,8 @@ function UserProfile() {
     <div className="pt-16">
       <NavBar />
       <div className="main_body flex flex-col md:flex-row">
-        <div className="left ml-16 mt-6 w-1/4">
-          <a href="/" className="text-[#1D4ED8] text-bold flex flex-row p-3">
+        <div className="left ml-16 mt-6 w-full md:w-1/4">
+          <a href="/" className="text-[#1D4ED8] font-bold flex flex-row p-3">
             Back to catalog
           </a>
 
@@ -93,26 +91,45 @@ function UserProfile() {
                 alt=""
                 className="w-60 h-46 border-1 rounded-md pt-9"
               />
-              <h1 className="text-lg font-bold">Bid</h1>
-              <p className="pt-8">Current bid: {details.auction.currentBid}</p>
-              <p>Minimum bid: {details.auction.minimumBid}</p>
-              <input
-                type="text"
-                placeholder="Enter your bid"
-                className="border-1 rounded-md p-2 w-60"
-              />
-              <button className="bg-[#1D4ED8] text-white p-2 rounded-md w-60 mt-4">
-                Place bid
-              </button>
+              <div className="mt-2">
+                {details.auctionExpired ? (
+                  <p className="bg-[#DB2721] p-1 rounded-lg text-white w-32 text-center">
+                    Auction Ended
+                  </p>
+                ) : (
+                  <p className="bg-[#21A67A] p-1 rounded-lg text-white w-32 text-center">
+                    Live Auction
+                  </p>
+                )}
+                <h3 className="text-xl font-semibold p-1">
+                  {details.auction.title}
+                </h3>
+                <div className="flex flex-row p-1">
+                  <p className="pr-4 grow">Minimum Bid:</p>
+                  <h1 className="font-semibold order-2 text-xl">
+                    ${details.minBid || details.auction.startingBid}
+                  </h1>
+                </div>
+                <div className="flex flex-row p-1">
+                  <p className="pr-4 grow">Current Bid:</p>
+                  <h1 className="font-semibold text-xl ">
+                    ${details.maxBid || details.auction.currentBid}
+                  </h1>
+                </div>
+                <p className="p-1">
+                  Ends in: {details.remainingDays} Days {details.remainingHours}{" "}
+                  Hours
+                </p>
+              </div>
             </>
           )}
           {error && <p className="text-red-500">{error}</p>}
         </div>
-        <div className="middle m-12 w-1/2">
+        <div className="middle m-12 w-full md:w-1/2">
           <h1 className="text-lg font-bold">Description</h1>
           <p className="pt-8">{details?.auction.description}</p>
 
-          <div className="w-1/2 pt-28 ">
+          <div className="pt-28">
             <form onSubmit={submitReview}>
               <div className="mb-4">
                 <label
@@ -171,9 +188,9 @@ function UserProfile() {
             </div>
           </div>
         </div>
-        <div className="Right">
+        <div className="right flex flex-col items-center w-full md:w-1/4">
           {details?.bids.map((bid) => (
-            <div key={bid._id} className="border-1 rounded-md p-2 mt-4">
+            <div key={bid._id} className="border-1 rounded-md p-2 mt-4 w-full">
               <p className="font-bold">Bidder: {bid.bidder}</p>
               <p>Bid amount: {bid.amount}</p>
             </div>

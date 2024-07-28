@@ -63,12 +63,12 @@ function BidButton({ id }) {
             <div className="flex flex-row p-1">
               <p className="pr-4 order-1 grow">Minimum Bid:</p>
               <h1 className="font-semibold order-2 text-xl">
-                ${details.minBid}
+                ${details.minBid || details.auction.startingBid}
               </h1>
             </div>
             <div className="flex flex-row p-1">
               <p className="pr-4 grow">Current Bid:</p>
-              <h1 className="font-semibold text-xl ">${details.maxBid}</h1>
+              <h1 className="font-semibold text-xl ">${details.maxBid || details.auction.currentBid}</h1>
             </div>
             <p className="p-1">
               Ends in: {details.remainingDays} Days {details.remainingHours}{" "}

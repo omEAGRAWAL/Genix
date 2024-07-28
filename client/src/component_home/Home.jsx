@@ -3,7 +3,7 @@ import Nav_bar from "./Nav_bar";
 import Auction_card from "../auction/Auction_card";
 import { useEffect, useState } from "react";
 import home from "./Asset/home.png";
-
+import Footer from "./Footer";
 function Home() {
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -65,21 +65,18 @@ function Home() {
             {/* <CgPlayButtonO /> */}
             Watch Video
           </button>
-
-         
         </div>
         <div className="">
           <img src={home} alt="" />
         </div>
       </div>
       <button
-            onClick={() => setOnlyLive(!onlyLive)}
-            className="bg-gradient-to-t from-[#1D4ED8] to-[#5AD7FE] p-2 text-white rounded-3xl mt-4 flex items-center gap-2"
-          >
-            {onlyLive ? "Show All Auctions" : "Show Live Auctions"}
-          </button>
+        onClick={() => setOnlyLive(!onlyLive)}
+        className="bg-gradient-to-t from-[#1D4ED8] to-[#5AD7FE] p-2 text-white rounded-3xl mt-4 flex items-center gap-2"
+      >
+        {onlyLive ? "Show All Auctions" : "Show Live Auctions"}
+      </button>
       <div className="flex">
-        
         <div className="m-8 flex flex-wrap items-center justify-center">
           {filteredDetails &&
             filteredDetails.map((auction) => (
@@ -87,6 +84,8 @@ function Home() {
             ))}
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }
