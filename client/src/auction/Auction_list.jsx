@@ -71,7 +71,7 @@ function AuctionList() {
       const token = localStorage.getItem("token");
       console.log("Token:", token);
 
-      const response = await fetch("http://localhost:3000/api/auctions", {
+      const response = await fetch("/api/auctions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

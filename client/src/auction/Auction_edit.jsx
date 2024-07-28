@@ -103,7 +103,7 @@ function EditAuction() {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await fetch(`http://localhost:3000/api/auctions/${id}`, {
+      const response = await fetch(`/api/auctions/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

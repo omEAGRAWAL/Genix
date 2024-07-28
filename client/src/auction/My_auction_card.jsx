@@ -16,7 +16,7 @@ function BidButton({ id }) {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/auctions/${id}`,
+          `/api/auctions/${id}`,
           {
             method: "GET",
             headers: {

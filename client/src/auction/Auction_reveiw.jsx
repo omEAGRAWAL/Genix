@@ -24,7 +24,7 @@ function ReviewForm({ itemId }) {
     const reviewData = { rating, comment };
     try {
       const response = await fetch(
-        `http://localhost:3000/api/${itemId}/reviews`,
+        `/api/${itemId}/reviews`,
         {
           method: "POST",
           headers: {
