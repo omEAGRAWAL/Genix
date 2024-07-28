@@ -24,7 +24,7 @@ function UserProfile() {
 
   const fetchData = async (token) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/auctions/${id}`, {
+      const response = await fetch(`/api/auctions/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -52,17 +52,14 @@ function UserProfile() {
 
     const reviewData = { rating, review };
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/auctions/reviews/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-          body: JSON.stringify(reviewData),
-        }
-      );
+      const res = await fetch(`/api/auctions/reviews/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(reviewData),
+      });
       if (res.ok) {
         alert("Review submitted successfully!");
         setRating(1);
