@@ -4,6 +4,10 @@ import Auction_card from "../auction/Auction_card";
 import { useEffect, useState } from "react";
 import home from "./Asset/home.png";
 import Footer from "./Footer";
+import { FaRegPlayCircle } from "react-icons/fa";
+import { TbLivePhoto } from "react-icons/tb";
+import { TbLivePhotoOff } from "react-icons/tb";
+
 function Home() {
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -43,13 +47,15 @@ function Home() {
       <Nav_bar />
 
       <div
-        className="home flex flex-row m-20 pl-10 mt-10"
-        style={{
-          padding: "60px ",
-        }}
+        className="home flex flex-row pt-20 p-8 md:m-20 md:mb-4  md:pl-10 md:mt-10"
+        style={
+          {
+            // padding: "60px ",
+          }
+        }
       >
         <div className="font-inter">
-          <div className="text-5xl text-[#0F0C29] ">
+          <div className="text-3xl md:text-5xl text-[#0F0C29] ">
             <h1>Your Gateway</h1>
             <h1>to Extraordinary </h1>
             <h1>Finds</h1>
@@ -61,21 +67,35 @@ function Home() {
           </h3>
           <br />
 
-          <button className="bg-gradient-to-t from-[#1D4ED8] to-[#5AD7FE] p-2 text-white rounded-3xl flex items-center gap-2">
+          <button className="bg-gradient-to-r from-[#1D4ED8] to-[#5AD7FE] p-2 text-white rounded-3xl flex items-center gap-2">
             {/* <CgPlayButtonO /> */}
+            <FaRegPlayCircle />
             Watch Video
           </button>
         </div>
-        <div className="">
+        <div className=" hidden md:flex">
           <img src={home} alt="" />
         </div>
       </div>
-      <button
-        onClick={() => setOnlyLive(!onlyLive)}
-        className="bg-gradient-to-t from-[#1D4ED8] to-[#5AD7FE] p-2 text-white rounded-3xl mt-4 flex items-center gap-2"
-      >
-        {onlyLive ? "Show All Auctions" : "Show Live Auctions"}
-      </button>
+      <div className="pt-20 p-8 md:m-20   md:pl-10 md:mt-10">
+        <button
+          onClick={() => setOnlyLive(!onlyLive)}
+          className="p-2 md:p-3 bg-gradient-to-r from-[#1D4ED8] to-[#5AD7FE]  text-white font-semibold rounded-3xl  flex items-center gap-2"
+        >
+          {onlyLive ? (
+            <>
+              <TbLivePhotoOff />
+              All Auction
+            </>
+          ) : (
+            <>
+              <TbLivePhoto />
+              Live Auction
+            </>
+          )}
+        </button>
+      </div>
+
       <div className="flex">
         <div className="m-8 flex flex-wrap items-center justify-center">
           {filteredDetails &&

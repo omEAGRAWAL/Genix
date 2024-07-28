@@ -23,7 +23,12 @@ function Sign_Up() {
     e.preventDefault();
 
     // Check if any field is empty
-    if (!formData.first_name || !formData.last_name || !formData.email || !formData.password) {
+    if (
+      !formData.first_name ||
+      !formData.last_name ||
+      !formData.email ||
+      !formData.password
+    ) {
       alert("Please fill in all fields.");
       return;
     }
@@ -52,13 +57,13 @@ function Sign_Up() {
   return (
     <div>
       <Header />
-      <div className="flex flex-row w-full">
+      <div className="flex m-6 flex-row ">
         <div
           id="sign_up_form"
-          className="pl-24 pt-7 w-1/2"
+          className="md:pl-24 md:pt-7 md:w-1/2"
           style={{ height: 581, width: 400 }}
         >
-          <form className="w-full" onSubmit={handleSignUp}>
+          <form className="md:w-full" onSubmit={handleSignUp}>
             <div className="flex flex-col gap-5">
               <div>
                 <h1 className="text-[#191D23] text-xl/[30px]">Sign Up</h1>
@@ -128,24 +133,25 @@ function Sign_Up() {
               <div className="flex justify-center items-center">
                 <p>----------or sign up with----------</p>
               </div>
-              <div className="google apple facebook">
-                <Facebook />
-                <Oauth />
-              </div>
-              <div className="flex justify-center items-center text-lg">
-                <p>
-                  Want to know more?{" "}
-                  <a href="https://www.google.com" className="text-[#1D4ED8]">
-                    Auction rules
-                  </a>
-                </p>
-              </div>
+              <div className="google apple facebook"></div>
             </div>
           </form>
+          <div className=" flex flex-row justify-between m-2 mt-0  ">
+            <Facebook />
+            <Oauth />
+          </div>
+          <div className="flex justify-center items-center text-lg">
+            <p>
+              Already Have an Accounr?{" "}
+              <a href="/login" className="text-[#1D4ED8]">
+                Log-in
+              </a>
+            </p>
+          </div>
         </div>
-        <div className="flex justify-center items-center w-1/2">
+        <div className="hidden  md:flex justify-center items-center w-1/2">
           <img
-            className="p-10 m-10"
+            className="p-10 m-10 hidden md:flex"
             src={sign_up}
             alt="Sign Up"
             width="550px"

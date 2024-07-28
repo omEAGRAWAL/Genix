@@ -1,8 +1,6 @@
 import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import { app } from "../firebaseConfig";
-// import { useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import { signInSuccess } from "../redux/user/userSlice";
+import { FcGoogle } from "react-icons/fc";
 
 export default function OAuth() {
   const auth = getAuth(app);
@@ -45,5 +43,13 @@ export default function OAuth() {
     }
   };
 
-  return <button onClick={handleGoogleSignIn}>Sign in with Google</button>;
+  return (
+    <button
+      onClick={handleGoogleSignIn}
+      className="flex flex-row items-center border border-gray-300 rounded-md  px-4 py-1 hover:bg-gray-100"
+    >
+      <FcGoogle className="m-1 inline" />
+      <span className="ml-2">Google</span>
+    </button>
+  );
 }

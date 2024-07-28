@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Modal from "../bid/Modal";
 import BiddingForm from "../bid/BiddingForm";
 import NavBar from "../component_home/Nav_bar";
+import StarRating from "./Starrating.jsx"; // Import the StarRating component
 
 function UserProfile() {
   const [details, setDetails] = useState(null);
@@ -10,7 +11,7 @@ function UserProfile() {
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [review, setReview] = useState("");
-  const [rating, setRating] = useState(1);
+  const [rating, setRating] = useState(1); // Default rating set to 1
   const [error, setError] = useState(null);
 
   const openModal = () => setIsModalOpen(true);
@@ -73,7 +74,7 @@ function UserProfile() {
   };
 
   return (
-    <div className="pt-16">
+    <div className="pt-20">
       <NavBar />
       <div className="main_body flex flex-col md:flex-row">
         <div className="left ml-16 mt-6 w-full md:w-1/4">
@@ -102,7 +103,7 @@ function UserProfile() {
                   {details.auction.title}
                 </h3>
                 <div className="flex flex-row p-1">
-                  <p className="pr-4 grow">Minimum Bid:</p>
+                  <p className="pr-4 grow">Starting Bid:</p>
                   <h1 className="font-semibold order-2 text-xl">
                     ${details.minBid || details.auction.startingBid}
                   </h1>
@@ -113,17 +114,22 @@ function UserProfile() {
                     ${details.maxBid || details.auction.currentBid}
                   </h1>
                 </div>
-                <p className="p-1">
-                  Ends in: {details.remainingDays} Days {details.remainingHours}{" "}
-                  Hours
-                </p>
+                {!details.auctionExpired ? (
+                  <p className="p-1">
+                    Ends in: {details.remainingDays} Days{" "}
+                    {details.remainingHours} Hours {details.remainingMinutes}{" "}
+                    Minutes
+                  </p>
+                ) : (
+                  <div className=" text-xl text-red-700 font-semibold"></div>
+                )}
               </div>
             </>
           )}
           {error && <p className="text-red-500">{error}</p>}
         </div>
-        <div className="middle m-12 w-full md:w-1/2">
-          <h1 className="text-lg font-bold">Description</h1>
+        <div className="middle m-8 w-full md:w-1/2">
+          <h1 className="text-xl font-bold">Description</h1>
           <p className="pt-8">{details?.auction.description}</p>
 
           <div className="pt-28">
@@ -135,22 +141,8 @@ function UserProfile() {
                 >
                   Rating (1-5 stars)
                 </label>
-                <select
-                  id="rating"
-                  value={rating}
-                  onChange={(e) => setRating(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                >
-                  <option value="" disabled>
-                    Select rating
-                  </option>
-                  {[1, 2, 3, 4, 5].map((value) => (
-                    <option key={value} value={value}>
-                      {value} {value === 1 ? "star" : "stars"}
-                    </option>
-                  ))}
-                </select>
+                <StarRating rating={rating} setRating={setRating} />{" "}
+                {/* Use StarRating component */}
               </div>
               <div className="mb-4">
                 <label
@@ -185,30 +177,47 @@ function UserProfile() {
             </div>
           </div>
         </div>
-        <div className="right flex flex-col items-center w-full md:w-1/4">
-          {details?.bids.map((bid) => (
-            <div key={bid._id} className="border-1 rounded-md p-2 mt-4 w-full">
-              <p className="font-bold">Bidder: {bid.bidder}</p>
-              <p>Bid amount: {bid.amount}</p>
-            </div>
-          ))}
-          <div className="min-h-screen flex items-center justify-center">
-            <button
-              onClick={openModal}
-              className="px-4 py-2 bg-blue-500 text-white rounded-md"
-            >
-              Place a Bid
-            </button>
-
-            <Modal isOpen={isModalOpen} onClose={closeModal}>
-              <BiddingForm
-                minimumBid={details?.auction.minimumBid}
-                currentBid={details?.auction.currentBid}
-                id={details?.auction._id}
-                timeRemaining={details?.auction.timeRemaining}
-                onClose={closeModal}
-              />
-            </Modal>
+        <div className="right flex flex-col items-center w-full m-8 md:w-1/4 space-y-4">
+          <h2 className="text-2xl font-semibold mb-4">Bids</h2>
+          <div className="w-full space-y-4">
+            {details?.bids.map((bid) => (
+              <div
+                key={bid._id}
+                className="bg-white border border-gray-300 rounded-md shadow p-4"
+              >
+                <p className="font-bold text-gray-700">Bidder: {bid.bidder}</p>
+                <p className="text-gray-600">Bid amount: ${bid.amount}</p>
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center justify-center mt-6">
+            {details?.auctionExpired ? (
+              <div className=" text-xl text-red-700 font-semibold">
+                Auction Ended
+                {/* {details?.bid.winner} */}
+              </div>
+            ) : (
+              <div className="">
+                {" "}
+                <button
+                  onClick={openModal}
+                  className="px-6 py-2 bg-gradient-to-r from-blue-500 to-teal-400 text-white rounded-md shadow-md hover:from-blue-600 hover:to-teal-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                >
+                  Place a Bid
+                </button>
+                <Modal isOpen={isModalOpen} onClose={closeModal}>
+                  <BiddingForm
+                    minBid={details?.minBid}
+                    currentBid={details?.maxBid}
+                    id={details?.auction._id}
+                    remainingDays={details?.remainingDays}
+                    remainingHours={details?.remainingHours}
+                    remainingMinutes={details?.remainingMinutes}
+                    onClose={closeModal}
+                  />
+                </Modal>
+              </div>
+            )}
           </div>
         </div>
       </div>

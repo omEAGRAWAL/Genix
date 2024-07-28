@@ -7,7 +7,7 @@ import {
 } from "firebase/storage";
 import { app } from "../firebaseConfig";
 import Header from "../component_home/Nav_bar";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function AuctionList() {
   const navigate = useNavigate();
@@ -96,9 +96,7 @@ function AuctionList() {
         });
         setImageFile(null);
         setImageUrl(null);
-        navigate('/auction/my');
-
-
+        navigate("/auction/my");
       } else {
         const error = await response.text();
         alert(`Error: ${error}`);
@@ -121,6 +119,7 @@ function AuctionList() {
               ref={filePickerRef}
               onChange={handleImageUpload}
             />
+            <p>Upload Image</p>
             <img
               src={
                 imageUrl ||
@@ -131,10 +130,19 @@ function AuctionList() {
               onClick={() => filePickerRef.current.click()}
             />
             {uploading && (
-              <p className="text-gray-500">
-                Upload progress: {uploadPercentage}%
-              </p>
+              <div className="mt-4">
+                <p className="text-gray-500 mb-2">
+                  Upload progress: {uploadPercentage}%
+                </p>
+                <div className="relative w-full h-4 bg-gray-300 rounded-md overflow-hidden">
+                  <div
+                    className="absolute top-0 left-0 h-full bg-[#DB2721]"
+                    style={{ width: `${uploadPercentage}%` }}
+                  ></div>
+                </div>
+              </div>
             )}
+
             {uploadFail && (
               <p className="text-red-500">Upload failed. Please try again.</p>
             )}

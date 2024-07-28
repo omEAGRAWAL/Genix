@@ -27,7 +27,6 @@ const sendEmail = async (to, subject, text) => {
     console.error("Error sending email:", error);
   }
 };
-
 exports.placeBid = async (req, res) => {
   const { amount } = req.body;
   const auctionItemId = req.params.id;
@@ -38,11 +37,15 @@ exports.placeBid = async (req, res) => {
       options: { sort: { amount: -1 } }, // Sort bids in descending order
     });
 
-    if (!auction) return res.status(404).send("Auction item not found");
-    if (auction.ended) return res.status(400).send("Auction has ended");
+    if (!auction)
+      return res.status(404).json({ error: "Auction item not found" });
+    if (auction.ended)
+      return res.status(400).json({ error: "Auction has ended" });
 
     if (amount <= auction.currentBid)
-      return res.status(400).send("Bid must be higher than current bid");
+      return res
+        .status(400)
+        .json({ error: "Bid must be higher than the current bid" });
 
     // Notify the previous highest bidder
     if (auction.bids.length > 0) {
@@ -70,9 +73,9 @@ exports.placeBid = async (req, res) => {
     auction.bids.push(bid);
     await auction.save();
 
-    res.status(201).send("Bid placed successfully");
+    res.status(201).json({ message: "Bid placed successfully" });
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).json({ error: error.message });
   }
 };
 

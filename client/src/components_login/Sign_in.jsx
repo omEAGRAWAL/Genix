@@ -58,10 +58,10 @@ function Sign_Up() {
     <div>
       <Header />
 
-      <div className="flex flex-row w-full">
+      <div className="flex flex-row w-full ">
         <div
           id="sign_in_form"
-          className="pl-24 pt-7 w-1/2"
+          className=" m-6 md:m-0 md:pl-24 md:pt-7 w-full md:w-1/2"
           style={{ height: 581, width: 400 }}
         >
           <form className="w-full" onSubmit={handleSignUp}>
@@ -110,10 +110,10 @@ function Sign_Up() {
               <div className="flex justify-center items-center">
                 <p>----------or sign up with----------</p>
               </div>
-              <div className="google apple facebook">
-                <Facebook />
-                <Oauth />
-              </div>
+              <div className=" flex flex-row justify-between m-2 mt-0  ">
+            <Facebook />
+            <Oauth />
+          </div>
               <div className="flex justify-center items-center text-lg">
                 <p>
                   Don’t have an Account?{" "}
@@ -125,13 +125,10 @@ function Sign_Up() {
             </div>
           </form>
         </div>
-        <div className="flex justify-center items-center w-1/2">
+        <div className="hidden md:flex mt-0  ">
           <img
-            className="p-10 m-10"
+            className="p-8 pt-0"
             src={sign_up}
-            alt="Sign Up"
-            width="550px"
-            height="500px"
           />
         </div>
       </div>

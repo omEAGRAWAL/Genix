@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { LoginSocialFacebook } from "reactjs-social-login";
 import { useState } from "react";
+import { FaFacebook } from "react-icons/fa";
 
 function Facebook() {
   const [profile, setProfile] = useState(null);
@@ -8,27 +9,25 @@ function Facebook() {
 
   const handleLogin = async (profile) => {
     try {
-      const response = await fetch(
-        "/api/users/register/facebook",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            first_name: profile.first_name,
-            last_name: profile.last_name,
-            email: profile.email,
-            password: profile.id,
-            user_image: profile.image,
-          }),
-        }
-      );
+      const response = await fetch("/api/users/register/facebook", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          first_name: profile.first_name,
+          last_name: profile.last_name,
+          email: profile.email,
+          password: profile.id, // This is generally not recommended; consider a secure method.
+          user_image: profile.image,
+        }),
+      });
+
       if (response.ok) {
         const result = await response.json();
-        localStorage.setItem("token", JSON.stringify(result));
+        localStorage.setItem("token", result.token); // Ensure the token is properly stored
         console.log("Registration successful");
-        window.location.href = "/";
+        window.location.href = "/"; // Redirect to the home page
       } else {
         console.log("Registration failed");
       }
@@ -51,18 +50,11 @@ function Facebook() {
           console.error("Facebook login error:", error);
         }}
       >
-        <button className="facebook-login-button">Login with Facebook</button>
-        {/* Uncomment the below line if using a styled button from a library */}
-        {/* <FacebookLoginButton /> */}
+        <button className="flex  w-full items-center border border-gray-300 rounded-md px-2 py-1 ">
+          <FaFacebook className="inline mr-2" />
+          Facebook
+        </button>
       </LoginSocialFacebook>
-      {profile && (
-        <div>
-          <h3>Welcome, {profile.name ? profile.name : "User"}</h3>
-          {/* <p>Email: {profile.email}</p> */}
-          {/* Add more profile details if needed */}
-        </div>
-      )}
-      {error && <div className="error">Error: {error.message}</div>}
     </div>
   );
 }

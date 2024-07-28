@@ -1,5 +1,6 @@
 const Auction = require("../models/auction");
 const Bid = require("../models/bid");
+const User = require("../models/user");
 
 exports.createAuction = async (req, res) => {
   const { title, description, image, startingBid, endDate } = req.body;
@@ -78,10 +79,11 @@ exports.viewAuctionsMy = async (req, res) => {
 exports.viewAuctionDetails = async (req, res) => {
   const { id } = req.params;
   try {
-    const auction = await Auction.findById(id).populate("bids");
+    const auction = await Auction.findById(id).populate("bids", );
     if (!auction) return res.status(404).send("Auction not found");
 
     const bids = await Bid.find({ auctionItem: id });
+    
     const bidAmounts = bids.map((bid) => bid.amount);
     const minBid = bidAmounts.length ? Math.min(...bidAmounts) : null;
     const maxBid = bidAmounts.length ? Math.max(...bidAmounts) : null;
@@ -94,6 +96,7 @@ exports.viewAuctionDetails = async (req, res) => {
     const remainingHours = Math.floor(
       (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
     );
+    const remainingMinutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
 
     res.json({
       auction,
@@ -102,6 +105,7 @@ exports.viewAuctionDetails = async (req, res) => {
       maxBid,
       remainingDays,
       remainingHours,
+      remainingMinutes,
       auctionExpired: timeRemaining <= 0,
     });
   } catch (error) {

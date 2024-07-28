@@ -251,7 +251,7 @@ function Nav_bar() {
 
         {/* Profile section visible on mobile */}
         <div className="md:hidden flex items-center justify-end ">
-          {token && (
+          {token ? (
             <div className="relative">
               <img
                 src={user?.user_image}
@@ -292,6 +292,13 @@ function Nav_bar() {
                   >
                     My Auctions
                   </a>
+                  <a
+                    href="/auction/new"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  >
+                    new Auctions
+                  </a>
+
                   <button
                     onClick={signout}
                     className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
@@ -300,6 +307,13 @@ function Nav_bar() {
                   </button>
                 </div>
               )}
+            </div>
+          ) : (
+            <div className="flex gap-4">
+              
+              <a href="/signup" className="hover:font-bold">
+                Sign up
+              </a>
             </div>
           )}
         </div>

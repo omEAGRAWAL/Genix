@@ -68,12 +68,21 @@ function BidButton({ id }) {
             </div>
             <div className="flex flex-row p-1">
               <p className="pr-4 grow">Current Bid:</p>
-              <h1 className="font-semibold text-xl ">${details.maxBid || details.auction.currentBid}</h1>
+              <h1 className="font-semibold text-xl ">
+                ${details.maxBid || details.auction.currentBid}
+              </h1>
             </div>
-            <p className="p-1">
-              Ends in: {details.remainingDays} Days {details.remainingHours}{" "}
-              Hours
-            </p>
+
+            {!details.auctionExpired ? (
+              <p className="p-1">
+                Ends in: {details.remainingDays} Days {details.remainingHours}{" "}
+                Hours {details.remainingMinutes} Minutes
+              </p>
+            ) : (
+              <div className=" text-lg text-red-600 font-semibold">
+                Auction Ended
+              </div>
+            )}
             <button
               className="bg-gradient-to-r from-[#DB2721] to-[#5AD7FE] text-white p-2 rounded-md mt-4 w-full"
               onClick={() => handleClick(details.auction._id)}
