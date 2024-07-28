@@ -2,7 +2,7 @@
     "rewrites": [
       {
         "source": "/api/(.*)",
-        "destination": "http://ec2-54-92-139-93.compute-1.amazonaws.com:3000"
+        "destination": "http://ec2-54-92-139-93.compute-1.amazonaws.com:3000/$1"
       }
     ],
     "redirects": [
