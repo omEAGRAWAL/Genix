@@ -36,6 +36,7 @@ const BiddingForm = ({
         const data = await response.json();
         console.log("Bid placed successfully:", data);
         alert("Bid submitted successfully!");
+        window.location.reload(); // Reload the page to reflect the new bid
         if (onClose) onClose(); // Close the modal if onClose is provided
       } else {
         try {
@@ -67,9 +68,9 @@ const BiddingForm = ({
           <span>Straight bid</span>
           <input
             type="number"
-            value={straightBid + 1}
+            // value={straightBid + 1}
             onChange={handleStraightBidChange}
-            placeholder="$"
+            placeholder={straightBid + 1}
             className="mt-1 p-2 border border-gray-300 rounded-md"
             required
           />

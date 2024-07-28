@@ -107,29 +107,28 @@ function Sign_Up() {
                   Continue
                 </button>
               </div>
-              <div className="flex justify-center items-center">
-                <p>----------or sign up with----------</p>
-              </div>
-              <div className=" flex flex-row justify-between m-2 mt-0  ">
-            <Facebook />
-            <Oauth />
-          </div>
-              <div className="flex justify-center items-center text-lg">
-                <p>
-                  Don’t have an Account?{" "}
-                  <a href="/signup" className="text-[#1D4ED8]">
-                    Sign up here
-                  </a>
-                </p>
-              </div>
             </div>
           </form>
+          <div className="flex flex-col pt-3 gap-5">
+            <div className="flex justify-center items-center">
+              <p>----------or sign up with----------</p>
+            </div>
+            <div className=" flex flex-row justify-between m-2 mt-0  ">
+              <Facebook />
+              <Oauth />
+            </div>
+            <div className="flex justify-center items-center text-lg">
+              <p>
+                Don’t have an Account?{" "}
+                <a href="/signup" className="text-[#1D4ED8]">
+                  Sign up here
+                </a>
+              </p>
+            </div>
+          </div>
         </div>
         <div className="hidden md:flex mt-0  ">
-          <img
-            className="p-8 pt-0"
-            src={sign_up}
-          />
+          <img className="p-8 pt-0" src={sign_up} />
         </div>
       </div>
     </div>

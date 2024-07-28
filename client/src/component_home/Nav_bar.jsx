@@ -154,12 +154,12 @@ function Nav_bar() {
                     >
                       My Bids
                     </a>
-                    <a
+                    {/* <a
                       href="/bidding/history"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                     >
                       Bid History
-                    </a>
+                    </a> */}
                     <a
                       href="/bidding/rules"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
@@ -238,10 +238,13 @@ function Nav_bar() {
               </div>
             ) : (
               <div className="flex gap-4">
-                <a href="/login" className="hover:font-bold">
-                  Sign in
+                <a href="/login" className="hover:font-bold p-3">
+                  Log In
                 </a>
-                <a href="/signup" className="hover:font-bold">
+                <a
+                  href="/signup"
+                  className="hover:font-bold bg-[#fe9999] rounded-3xl p-3 font-bold"
+                >
                   Sign up
                 </a>
               </div>
@@ -310,8 +313,7 @@ function Nav_bar() {
             </div>
           ) : (
             <div className="flex gap-4">
-              
-              <a href="/signup" className="hover:font-bold">
+              <a href="/signup" className="hover:font-bold bg-[#fe9999] rounded-3xl p-3 font-bold">
                 Sign up
               </a>
             </div>

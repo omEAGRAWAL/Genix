@@ -74,7 +74,7 @@ function BidButton({ id }) {
             </div>
 
             {!details.auctionExpired ? (
-              <p className="p-1">
+              <p className="p-1 text-sm  ">
                 Ends in: {details.remainingDays} Days {details.remainingHours}{" "}
                 Hours {details.remainingMinutes} Minutes
               </p>
@@ -84,7 +84,7 @@ function BidButton({ id }) {
               </div>
             )}
             <button
-              className="bg-gradient-to-r from-[#DB2721] to-[#5AD7FE] text-white p-2 rounded-md mt-4 w-full"
+              className="bg-gradient-to-r font-bold text-lg from-[#DB2721] to-[#5AD7FE] text-white p-2 rounded-md mt-4 w-full"
               onClick={() => handleClick(details.auction._id)}
             >
               {details.auctionExpired ? "View Auction" : "Place Bid"}

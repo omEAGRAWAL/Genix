@@ -65,6 +65,7 @@ function UserProfile() {
         alert("Review submitted successfully!");
         setRating(1);
         setReview("");
+        window.location.reload();
       } else {
         alert("Failed to submit review. Please try again.");
       }

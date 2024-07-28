@@ -1,36 +1,4 @@
-/**
- * @swagger
- * /api/users/register:
- *   post:
- *     summary: Register a new user
- *     tags: [User]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - first_name
- *               - email
- *               - password
- *             properties:
- *               first_name:
- *                 type: string
- *               last_name:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *               user_image:
- *                 type: string
- *     responses:
- *       201:
- *         description: User registered successfully
- *       400:
- *         description: Bad request
- */
+
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -77,7 +45,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "http://localhost:3001",
       },
     ],
   },
