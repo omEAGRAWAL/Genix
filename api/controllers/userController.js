@@ -22,18 +22,22 @@ exports.registerFacebook = async (req, res) => {
     const user = await User.findOne({ email });
     if (user) {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
-      res.header("Authorization", `Bearer ${token}`).json(token);
+      res
+        .header("Authorization", `Bearer ${token}`)
+        .json({ token: token, message: "Welcome Back" });
     } else {
       const newUser = new User({
         first_name,
         last_name,
         email,
-        password,
+        password: 123,
         user_image,
       });
       await newUser.save();
       const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET);
-      res.header("Authorization", `Bearer ${token}`).json(token);
+      res
+        .header("Authorization", `Bearer ${token}`)
+        .json({ token, message: "Your Password is 123 please change it" });
     }
   } catch (error) {
     res.status(400).send(error.message);

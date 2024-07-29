@@ -1,10 +1,8 @@
-Here's the API documentation for the User-related endpoints under `/api/users/`:
-
----
+API documentation for the User-related endpoints under `/api/users/`:
 
 # User API Documentation
 
-## Base URL
+## Base URL  :::  http://omagr.me:3000/
 
 All endpoints are prefixed with `/api/users/`.
 
@@ -34,7 +32,7 @@ Registers a new user.
 
 ---
 
-### Register User via Facebook
+### Register User via Facebook or google 
 
 **POST** `/register/facebook`
 
@@ -432,4 +430,5 @@ Common error responses include:
 - `400 Bad Request` - Indicates invalid input or request format.
 - `403 Forbidden` - Indicates access is denied, usually due to insufficient permissions.
 - `404 Not Found` - Indicates that the requested resource could not be found.
+
 

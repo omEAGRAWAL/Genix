@@ -29,11 +29,12 @@ export default function OAuth() {
       );
 
       const data = await res.json();
-      console.log("Registration data:", data);
+      console.log("Registration data:", data.token);
 
       if (res.ok) {
-        localStorage.setItem("token", data); // Ensure token is stored as a string
+        localStorage.setItem("token", data.token); // Ensure token is stored as a string
         console.log("Registration successful");
+        alert(data.message);
         window.location.href = "/"; // Consider using React Router's navigate method if available
       } else {
         console.log("Registration failed:", data.message);
