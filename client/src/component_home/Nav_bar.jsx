@@ -260,7 +260,12 @@ function Nav_bar() {
                 src={user?.user_image}
                 alt="Profile"
                 className="w-8 h-8 rounded-full border-2 border-white"
-                onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                onClick={() => {
+                  setIsUserDropdownOpen(!isUserDropdownOpen);
+                  setTimeout(() => {
+                    setIsUserDropdownOpen(false);
+                  }, 1500);
+                }}
               />
               {isUserDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-52 bg-white rounded-md shadow-lg z-10">
@@ -313,7 +318,10 @@ function Nav_bar() {
             </div>
           ) : (
             <div className="flex gap-4">
-              <a href="/signup" className="hover:font-bold bg-[#fe9999] rounded-3xl p-3 font-bold">
+              <a
+                href="/signup"
+                className="hover:font-bold bg-[#fe9999] rounded-3xl p-3 font-bold"
+              >
                 Sign up
               </a>
             </div>

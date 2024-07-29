@@ -77,7 +77,7 @@ function Home() {
           <img src={home} alt="" />
         </div>
       </div>
-      <div className=" pl-5 md:pl-10">
+      {/* <div className=" pl-5 md:pl-10">
         <div className="flex gap-4">
           <button
             onClick={() => setOnlyLive(true)}
@@ -102,7 +102,7 @@ function Home() {
             All Auctions
           </button>
         </div>
-      </div>
+      </div> */}
 
       <div className="flex">
         <div className="m-8 mt-2 flex flex-wrap items-center  w-full justify-center ">

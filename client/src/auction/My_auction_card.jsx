@@ -15,16 +15,13 @@ function BidButton({ id }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `/api/auctions/${id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              // Authorization: token, // Uncomment if you have a token
-            },
-          }
-        );
+        const response = await fetch(`/api/auctions/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: token, // Uncomment if you have a token
+          },
+        });
         if (response.ok) {
           const result = await response.json();
           setDetails(result);
@@ -44,7 +41,7 @@ function BidButton({ id }) {
   const deleteData = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch(`http://localhost:3000/api/auctions/${id}`, {
+      const response = await fetch(`/api/auctions/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -53,6 +50,7 @@ function BidButton({ id }) {
       });
       if (response.ok) {
         alert("Auction deleted successfully");
+        window
         navigate("/auction/my");
       } else {
         const err = await response.text();
@@ -98,7 +96,7 @@ function BidButton({ id }) {
                 <p className="pr-4 grow">Current Bid:</p>
                 <h1 className="font-semibold text-xl ">${details.maxBid}</h1>
               </div>
-              <p className="p-1">
+              <p className="p-1 text-sm">
                 Ends in: {details.remainingDays} Days {details.remainingHours}{" "}
                 Hours
               </p>
