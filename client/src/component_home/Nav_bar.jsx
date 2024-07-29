@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import logo from "../components_login/asset/Vector.png";
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
 function Nav_bar() {
   // State variables to manage the token, user data, and dropdown visibility
   const [token, setToken] = useState("");
@@ -10,10 +11,17 @@ function Nav_bar() {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
   // Toggle the dropdown menu's open/close state
   const toggleDropdown = () => setIsOpen(!isOpen);
   const closeDropdown = () => setIsOpen(false);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/?q=${searchQuery}`);
+    }
+  };
 
   // Retrieve the token from localStorage on component mount
   useEffect(() => {
@@ -100,6 +108,22 @@ function Nav_bar() {
 
         {/* Navigation Menu */}
         <div className="flex flex-row items-center gap-6">
+          {/* //search bar */}
+          <form onSubmit={handleSearch} className="flex items-center">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="border border-gray-300 rounded-md py-1 px-2"
+            />
+            <button
+              type="submit"
+              className="p-2 pl-3 pr-3 ml-1 mr-1  bg-[#fe9999] text-white rounded-2xl"
+            >
+              <FaSearch />
+            </button>
+          </form>
           <div className="hidden md:flex items-end">
             <ul className="flex gap-6 items-center relative">
               <li>

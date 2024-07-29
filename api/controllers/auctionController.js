@@ -79,11 +79,11 @@ exports.viewAuctionsMy = async (req, res) => {
 exports.viewAuctionDetails = async (req, res) => {
   const { id } = req.params;
   try {
-    const auction = await Auction.findById(id).populate("bids", );
+    const auction = await Auction.findById(id).populate("bids");
     if (!auction) return res.status(404).send("Auction not found");
 
     const bids = await Bid.find({ auctionItem: id });
-    
+
     const bidAmounts = bids.map((bid) => bid.amount);
     const minBid = bidAmounts.length ? Math.min(...bidAmounts) : null;
     const maxBid = bidAmounts.length ? Math.max(...bidAmounts) : null;
@@ -96,7 +96,9 @@ exports.viewAuctionDetails = async (req, res) => {
     const remainingHours = Math.floor(
       (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
     );
-    const remainingMinutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    const remainingMinutes = Math.floor(
+      (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+    );
 
     res.json({
       auction,
@@ -135,5 +137,25 @@ exports.addReview = async (req, res) => {
   } catch (error) {
     console.error(error); // Log the full error for debugging
     res.status(400).send("An error occurred while adding the review.");
+  }
+};
+
+exports.search = async function (req, res) {
+  const searchString = req.params.id; // Get the search query from request parameters
+
+  if (!searchString) {
+    return res.status(400).send("Search query cannot be empty");
+  }
+
+  try {
+    // Using a case-insensitive regular expression to search in title and description
+    const regex = new RegExp(searchString, "i");
+    const auctions = await Auction.find({
+      $or: [{ title: { $regex: regex } }, { description: { $regex: regex } }],
+    });
+
+    res.json(auctions);
+  } catch (error) {
+    res.status(500).send(error.message);
   }
 };

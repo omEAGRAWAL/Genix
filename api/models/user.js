@@ -43,6 +43,7 @@ const userSchema = new mongoose.Schema({
   },
   createdAuctions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Auction" }],
   bids: [{ type: mongoose.Schema.Types.ObjectId, ref: "Bid" }],
+  
 });
 
 userSchema.pre("save", async function (next) {
