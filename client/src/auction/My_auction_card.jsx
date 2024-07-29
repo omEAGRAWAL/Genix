@@ -50,7 +50,7 @@ function BidButton({ id }) {
       });
       if (response.ok) {
         alert("Auction deleted successfully");
-        window;
+        window.location.reload();
         navigate("/auction/my");
       } else {
         const err = await response.text();

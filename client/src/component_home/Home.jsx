@@ -72,6 +72,7 @@ function Home() {
             <FaRegPlayCircle />
             Watch Video
           </button>
+
         </div>
         <div className=" hidden md:flex">
           <img src={home} alt="" />

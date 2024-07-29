@@ -93,4 +93,4 @@ const processEndedAuctions = async () => {
 
 module.exports = processEndedAuctions;
 // Schedule the cron job
-// cron.schedule("* * * * *", processEndedAuctions);
+cron.schedule("* * * * *", processEndedAuctions);
