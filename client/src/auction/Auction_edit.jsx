@@ -212,7 +212,7 @@ function EditAuction() {
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          {!auction.ended ? (
+          {auction.ended ? (
             <p className="text-red-500">This auction has ended</p>
           ) : (
             <div>
