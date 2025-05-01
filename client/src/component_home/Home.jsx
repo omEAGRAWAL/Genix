@@ -6,7 +6,6 @@ import home from "./Asset/home.png";
 import Footer from "./Footer";
 import { FaRegPlayCircle } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
-
 function Home() {
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);

@@ -109,7 +109,7 @@ function Nav_bar() {
         {/* Navigation Menu */}
         <div className="flex flex-row items-center gap-6">
           {/* //search bar */}
-          <form onSubmit={handleSearch} className="flex items-center">
+          <form onSubmit={handleSearch} className="md:flex items-center hidden">
             <input
               type="text"
               placeholder="Search..."
@@ -274,12 +274,15 @@ function Nav_bar() {
               </div>
             )}
           </div>
+          
         </div>
+        
 
         {/* Profile section visible on mobile */}
         <div className="md:hidden flex items-center justify-end ">
           {token ? (
             <div className="relative">
+              
               <img
                 src={user?.user_image}
                 alt="Profile"
@@ -351,6 +354,7 @@ function Nav_bar() {
             </div>
           )}
         </div>
+       
       </header>
     </div>
   );
